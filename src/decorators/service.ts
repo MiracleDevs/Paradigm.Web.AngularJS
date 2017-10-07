@@ -32,7 +32,7 @@ export function Service(parameters?: IService): <T>(constructor: { new(...args: 
         {
             parameters.module.registerService(constructor);
         }
-    }
+    };
 }
 
 export interface IService extends IRegistrable

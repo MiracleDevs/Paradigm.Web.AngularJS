@@ -33,5 +33,5 @@ export function getRegistrableInfo<T>(constructor: Function): IRegistrable
     if (ObjectExtensions.isNull(constructor[registrableMetadataKey]))
         return null;
 
-    constructor[registrableMetadataKey];
+    return constructor[registrableMetadataKey];
 }

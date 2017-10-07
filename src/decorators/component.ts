@@ -7,7 +7,7 @@
 import { IRegistrable, registrableMetadataKey } from "./registrable";
 import { ObjectExtensions, FunctionExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
-function addBinding(binding: string, target: Object, propertyKey: string | symbol)
+function addBinding(binding: string, target: Object, propertyKey: string | symbol): void
 {
     if (ObjectExtensions.isNull(target) ||
         ObjectExtensions.isNull(target.constructor) ||
@@ -65,25 +65,25 @@ export function Component(parameters: IComponent): <T>(constructor: { new(...arg
         {
             parameters.module.registerComponent(constructor);
         }
-    }
+    };
 }
 
-export function InputBinding(target: Object, propertyKey: string | symbol)
+export function InputBinding(target: Object, propertyKey: string | symbol): void
 {
     addBinding("<", target, propertyKey);
 }
 
-export function OutputBinding(target: Object, propertyKey: string | symbol)
+export function OutputBinding(target: Object, propertyKey: string | symbol): void
 {
     addBinding("&", target, propertyKey);
 }
 
-export function TextBinding(target: Object, propertyKey: string | symbol)
+export function TextBinding(target: Object, propertyKey: string | symbol): void
 {
     addBinding("@", target, propertyKey);
 }
 
-export function TwoWayBinding(target: Object, propertyKey: string | symbol)
+export function TwoWayBinding(target: Object, propertyKey: string | symbol): void
 {
     addBinding("=", target, propertyKey);
 }
@@ -114,7 +114,7 @@ export function Require(controller: string | Function, searchOnParents: boolean 
             controllerName = "^" + controllerName;
 
         parameters.require[propertyKey] = controllerName;
-    }
+    };
 }
 
 export interface IComponent extends IRegistrable

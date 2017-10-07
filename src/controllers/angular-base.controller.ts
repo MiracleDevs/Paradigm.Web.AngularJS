@@ -39,21 +39,26 @@ export abstract class AngularControllerBase implements AngularController
 
     protected onInit(): void
     {
+        // override this method.
     }
 
     protected doCheck(): void
     {
+        // override this method.
     }
 
     protected onChanges(onChangesObj: IOnChangesObject): void
     {
+        // override this method.
     }
 
     protected onDestroy(): void
     {
+        // override this method.
     }
 
     protected postLink(): void
     {
-    } 
+        // override this method.
+    }
 }
