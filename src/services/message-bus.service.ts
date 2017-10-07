@@ -1,7 +1,7 @@
 ﻿/*!
- * Paradigm UI Web
+ * Paradigm Framework - AngularJS Wrapper
  * Copyright (c) 2017 Miracle Devs, Inc
- * Licensed under MIT (https://gitlab.com/miracledevs-paradigm/ui-web-angularjs/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
 import { Service } from "../decorators/service";
@@ -25,13 +25,13 @@ export class MessageBus extends ServiceBase
         return this.handlers.count();
     }
 
-    isRegistered<T>(messageType: new (...args) => T): boolean
+    isRegistered<T>(messageType: new (...args: any[]) => T): boolean
     {
         const type = messageType[messageTypeKey];
         return this.handlers.containsKey(type);
     }
 
-    handlerCount<T>(messageType: new (...args) => T): number
+    handlerCount<T>(messageType: new (...args: any[]) => T): number
     {
         const type = messageType[messageTypeKey];
 
@@ -41,7 +41,7 @@ export class MessageBus extends ServiceBase
         return this.handlers.get(type).count();
     }
 
-    register<T>(messageType: { new(...args): T }, handler: (x: T) => void): RegistrationToken
+    register<T>(messageType: { new(...args: any[]): T }, handler: (x: T) => void): RegistrationToken
     {
         const type = messageType[messageTypeKey];
 

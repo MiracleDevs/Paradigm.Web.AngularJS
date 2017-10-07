@@ -1,7 +1,7 @@
 /*!
- * Paradigm UI Web
+ * Paradigm Framework - AngularJS Wrapper
  * Copyright (c) 2017 Miracle Devs, Inc
- * Licensed under MIT (https://gitlab.com/miracledevs-paradigm/ui-web-angularjs/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
 import { DirectiveBase } from "./base.directive";
@@ -12,7 +12,6 @@ import { AngularServices } from "../services/angular.service";
 
 @Directive({
     name: "dateTimePicker",
-    restrict: "A",
     require:"ngModel",
     dependencies: [AngularServices.filter]
 })
@@ -28,7 +27,7 @@ export class DateTimePickerDirective extends DirectiveBase
         var options = {} as IDateTimePickerParameters;
 
         //////////////////////////////////////////////////////////////////
-        // Own properties
+        // own properties
         //////////////////////////////////////////////////////////////////
         this.tryGet(options, instanceAttributes, "format");
         this.tryGet(options, instanceAttributes, "dayViewHeaderFormat");

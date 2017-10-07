@@ -1,7 +1,7 @@
 ﻿/*!
- * Paradigm UI Web
+ * Paradigm Framework - AngularJS Wrapper
  * Copyright (c) 2017 Miracle Devs, Inc
- * Licensed under MIT (https://gitlab.com/miracledevs-paradigm/ui-web-angularjs/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
 import { IDirective, IScope, IAttributes, IController, ITranscludeFunction, IPromise } from "angular";
@@ -22,8 +22,11 @@ export abstract class DirectiveBase implements IDirective
         {
             for (var key in decorator)
             {
-                var destinationKey = (key === "bindings")? "scope" : key;
-                this[destinationKey] = decorator[key];
+                if (decorator.hasOwnProperty(key))
+                {
+                    var destinationKey = (key === "bindings") ? "scope" : key;
+                    this[destinationKey] = decorator[key];
+                }
             }
         }
 
@@ -32,12 +35,12 @@ export abstract class DirectiveBase implements IDirective
             var element = $(e);
             this.create(s, element, a, c, t);
             s.$on("$destroy", () => this.dispose(s, element, a, c, t));
-        }
+        };
     }
 
-    protected abstract create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction);
+    protected abstract create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void;
 
-    protected dispose(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction)
+    protected dispose(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         instanceElement.remove();
     }
@@ -46,7 +49,7 @@ export abstract class DirectiveBase implements IDirective
         call: () => IPromise<T>,
         success?: (result: T) => void,
         loading?: (loading: boolean) => void,
-        fail?: (reason: any) => void)
+        fail?: (reason: any) => void): void
     {
         if (!ObjectExtensions.isNull(loading))
             loading(true);
@@ -85,7 +88,7 @@ export abstract class DirectiveBase implements IDirective
         optionTo = optionTo || optionFrom;
 
         if (!ObjectExtensions.isNull(instanceAttributes[optionFrom]))
-            options[optionTo] = parseInt(instanceAttributes[optionFrom]);
+            options[optionTo] = parseInt(instanceAttributes[optionFrom], 10);
 
         return options[optionTo];
     }

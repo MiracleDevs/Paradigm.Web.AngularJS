@@ -1,4 +1,10 @@
-﻿import { ServiceBase } from "../services/base.service";
+﻿/*!
+ * Paradigm Framework - AngularJS Wrapper
+ * Copyright (c) 2017 Miracle Devs, Inc
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
+ */
+
+import { ServiceBase } from "../services/base.service";
 import { AngularServices } from "../services/angular.service";
 import { IPromise, IQService, ITimeoutService } from "angular";
 import { Service } from "../decorators/service";

@@ -1,7 +1,7 @@
 /*!
- * Paradigm UI Web
+ * Paradigm Framework - AngularJS Wrapper
  * Copyright (c) 2017 Miracle Devs, Inc
- * Licensed under MIT (https://gitlab.com/miracledevs-paradigm/ui-web-angularjs/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
 import { DirectiveBase } from "./base.directive";
@@ -13,7 +13,6 @@ import  * as $ from "jquery";
 
 @Directive({
     name: "horizontalScroller",
-    restrict: "A",
     dependencies: [AngularServices.interpolate]
 })
 export class HorizontalScrollerDirective extends DirectiveBase
@@ -165,10 +164,10 @@ export class HorizontalScrollerInstance
         const translate3D = `translate3d(${this.position}px, 0, 0)`;
 
         this.content.css({
-            '-ms-transform': translate,
-            '-moz-transform': translate3D,
-            '-webkit-transform': translate3D,
-            'transform': translate3D
+            "-ms-transform": translate,
+            "-moz-transform": translate3D,
+            "-webkit-transform": translate3D,
+            "transform": translate3D
         });
     }
 

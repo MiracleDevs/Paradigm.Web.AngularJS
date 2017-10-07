@@ -12,7 +12,6 @@ import  * as $ from "jquery";
 
 @Directive({
     name: "commentArea",
-    restrict: "A",
     require: "ngModel",
     bindings: {
         ngModel: "="

@@ -1,7 +1,7 @@
 /*!
- * Paradigm UI Web
+ * Paradigm Framework - AngularJS Wrapper
  * Copyright (c) 2017 Miracle Devs, Inc
- * Licensed under MIT (https://gitlab.com/miracledevs-paradigm/ui-web-angularjs/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
 import { DirectiveBase } from "./base.directive";
@@ -11,7 +11,6 @@ import { ITimeoutService, IScope, IAttributes, IController, ITranscludeFunction 
 
 @Directive({
     name: "focusWhen",
-    restrict: "A",
     dependencies: [AngularServices.timeout]
 })
 export class FocusWhenDirective extends DirectiveBase
@@ -26,7 +25,7 @@ export class FocusWhenDirective extends DirectiveBase
         var focusDelay = 100;
 
         if (instanceAttributes["focus-delay"])
-            focusDelay = parseInt(instanceAttributes["focus-delay"]);
+            focusDelay = parseInt(instanceAttributes["focus-delay"], 10);
 
         scope.$watch(() => instanceAttributes["focusWhen"], () =>
         {
@@ -43,7 +42,7 @@ export class FocusWhenDirective extends DirectiveBase
                 }
                 catch (e)
                 {
-
+                    // ignore exceptions
                 }
             }, focusDelay);
         });

@@ -1,7 +1,7 @@
 /*!
- * Paradigm UI Web
+ * Paradigm Framework - AngularJS Wrapper
  * Copyright (c) 2017 Miracle Devs, Inc
- * Licensed under MIT (https://gitlab.com/miracledevs-paradigm/ui-web-angularjs/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
 import { Directive } from "../decorators/directive";
@@ -10,8 +10,7 @@ import { IScope, IAttributes, ITranscludeFunction, IController } from "angular";
 import  * as $ from "jquery";
 
 @Directive({
-    name: "scrollToggleClass",
-    restrict: "A"
+    name: "scrollToggleClass"
 })
 export class ScrollToggleClassDirective extends DirectiveBase
 {
@@ -19,7 +18,7 @@ export class ScrollToggleClassDirective extends DirectiveBase
     {
         var self = this;
 
-        function updateElement()
+        function updateElement(): void
         {
             self.updateElement(instanceElement, instanceAttributes);
         }

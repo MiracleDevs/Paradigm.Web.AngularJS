@@ -1,7 +1,7 @@
 /*!
- * Paradigm UI Web
+ * Paradigm Framework - AngularJS Wrapper
  * Copyright (c) 2017 Miracle Devs, Inc
- * Licensed under MIT (https://gitlab.com/miracledevs-paradigm/ui-web-angularjs/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
 import { DirectiveBase } from "./base.directive";
@@ -11,8 +11,7 @@ import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 import  * as $ from "jquery";
 
 @Directive({
-    name: "removeClass",
-    restrict: "A"
+    name: "removeClass"
 })
 export class RemoveClassDirective extends DirectiveBase
 {

@@ -1,3 +1,9 @@
+/*!
+ * Paradigm Framework - AngularJS Wrapper
+ * Copyright (c) 2017 Miracle Devs, Inc
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
+ */
+
 var gulp = require("gulp");
 var util = require("gulp-util");
 var typescript = require("gulp-typescript");

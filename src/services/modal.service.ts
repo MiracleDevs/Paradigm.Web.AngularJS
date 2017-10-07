@@ -1,7 +1,7 @@
 ﻿/*!
- * Paradigm UI Web
+ * Paradigm Framework - AngularJS Wrapper
  * Copyright (c) 2017 Miracle Devs, Inc
- * Licensed under MIT (https://gitlab.com/miracledevs-paradigm/ui-web-angularjs/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
 import { Service } from "../decorators/service";
@@ -72,7 +72,7 @@ export class ModalService extends ServiceBase
         return modalInstance;
     }
 
-    close(modalInstance: ModalInstance, reason?: string)
+    close(modalInstance: ModalInstance, reason?: string): void
     {
         const modal = this.modals.get(modalInstance);
 
@@ -86,7 +86,7 @@ export class ModalService extends ServiceBase
         modalInstance.deferred.reject(reason);
     }
 
-    resolve<T>(modalInstance: ModalInstance, result: T)
+    resolve<T>(modalInstance: ModalInstance, result: T): void
     {
         const modal = this.modals.get(modalInstance);
 
@@ -100,7 +100,7 @@ export class ModalService extends ServiceBase
         modalInstance.deferred.resolve(result);
     }
 
-    private openModal(dialogInfo: IController, parameters: any, modalInstance: ModalInstance, template: string, staticDialog: boolean, keyboard: boolean)
+    private openModal(dialogInfo: IController, parameters: any, modalInstance: ModalInstance, template: string, staticDialog: boolean, keyboard: boolean): void
     {
         // create a new scope for the modal dialog.
         const scope = this.$rootScope.$new(true);
@@ -160,7 +160,7 @@ export class ModalService extends ServiceBase
         });
     }
 
-    private removeModal(modalInstance: ModalInstance, modal: JQuery, scope: angular.IScope)
+    private removeModal(modalInstance: ModalInstance, modal: JQuery, scope: angular.IScope): void
     {
         if (modalInstance.dispose != null)
             modalInstance.dispose();
@@ -209,12 +209,12 @@ export class ModalInstance
         this.promise = deferred.promise;
     }
 
-    close(reason?: string)
+    close(reason?: string): void
     {
         this.modalService.close(this, reason);
     }
 
-    resolve(result: any)
+    resolve(result: any): void
     {
         this.modalService.resolve(this, result);
     }

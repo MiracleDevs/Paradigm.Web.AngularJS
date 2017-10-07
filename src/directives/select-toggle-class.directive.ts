@@ -1,7 +1,7 @@
 /*!
- * Paradigm UI Web
+ * Paradigm Framework - AngularJS Wrapper
  * Copyright (c) 2017 Miracle Devs, Inc
- * Licensed under MIT (https://gitlab.com/miracledevs-paradigm/ui-web-angularjs/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
 import { DirectiveBase } from "./base.directive";
@@ -10,8 +10,7 @@ import { IScope, IAttributes, ITranscludeFunction, IController } from "angular";
 import  * as $ from "jquery";
 
 @Directive({
-    name: "selectToggleClass",
-    restrict: "A"
+    name: "selectToggleClass"
 })
 export class SelectToggleClassDirective extends DirectiveBase
 {
@@ -19,7 +18,7 @@ export class SelectToggleClassDirective extends DirectiveBase
     {
         var className = instanceAttributes["selectToggleClass"];
 
-        function documentClick()
+        function documentClick(): void
         {
             instanceElement.removeClass(className);
         }

@@ -1,19 +1,18 @@
 /*!
- * Paradigm UI Web
+ * Paradigm Framework - AngularJS Wrapper
  * Copyright (c) 2017 Miracle Devs, Inc
- * Licensed under MIT (https://gitlab.com/miracledevs-paradigm/ui-web-angularjs/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
 import { AngularServices } from "../services/angular.service";
 import { Directive } from "../decorators/directive";
 import { DirectiveBase } from "./base.directive";
 import { IInterpolateService, IScope, IAttributes, IController, ITranscludeFunction } from "angular";
-import { StateService, Transition } from '@uirouter/angularjs';
+import { StateService, Transition, StateDeclaration } from "@uirouter/angularjs";
 import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
 @Directive({
     name: "mdUiSrefActive",
-    restrict: "A",
     dependencies: [AngularServices.interpolate, AngularServices.state, AngularServices.transitions]
 })
 export class MdUiSrefActiveDirective extends DirectiveBase
@@ -28,7 +27,7 @@ export class MdUiSrefActiveDirective extends DirectiveBase
         var cssClass = instanceAttributes["mdUiSrefActive"];
         var state = this.interpolate(instanceAttributes["mdUiSref"] || instanceAttributes["uiSref"])(scope);
 
-        function update(toState): void
+        function update(toState: StateDeclaration): void
         {
             if (ObjectExtensions.isNull(toState) || ObjectExtensions.isNull(toState.name))
                 return;

@@ -1,3 +1,9 @@
+/*!
+ * Paradigm Framework - AngularJS Wrapper
+ * Copyright (c) 2017 Miracle Devs, Inc
+ * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
+ */
+
 import { ControllerBase } from "../controllers/base.controller";
 import { ITestPromiseService } from "./mock.service.spec";
 import { IScope, auto, translate } from "angular";
