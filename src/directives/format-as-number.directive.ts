@@ -1,0 +1,45 @@
+/*!
+ * Paradigm UI Web
+ * Copyright (c) 2017 Miracle Devs, Inc
+ * Licensed under MIT (https://gitlab.com/miracledevs-paradigm/ui-web-angularjs/blob/master/LICENSE)
+ */
+
+import { Directive } from "../decorators/directive";
+import { DirectiveBase } from "./base.directive";
+import { IScope, IAttributes, IController, ITranscludeFunction } from "angular";
+import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
+
+@Directive({
+    name: "formatAsNumber",
+    restrict: "A",
+    require: "?ngModel"
+})
+export class FormatAsNumberDirective extends DirectiveBase
+{
+    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    {
+        if (!ObjectExtensions.isNull(controller))
+        {
+            controller.$formatters.unshift(value =>
+            {
+                return (ObjectExtensions.isNull(value) || value === "") ? null : new Number(value).toFixed(instanceAttributes["decimalPlaces"] || 2);
+            });
+
+            controller.$parsers.unshift(value =>
+            {
+                return (ObjectExtensions.isNull(value) || value === "") ? null : new Number(value).valueOf();
+            });
+
+            instanceElement.blur(() =>
+            {
+                var value = instanceElement.val();
+                return instanceElement.val((ObjectExtensions.isNull(value) || value === "") ? null : new Number(instanceElement.val()).toFixed(instanceAttributes["decimalPlaces"] || 2));
+            });
+        }
+    }
+
+    static factory(): FormatAsNumberDirective
+    {
+        return new FormatAsNumberDirective();
+    }
+}

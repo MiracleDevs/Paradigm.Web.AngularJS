@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "es5",
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "strict": false,
+    "sourceMap": true,
+    "declaration": true,
+    "importHelpers": true,
+    "outDir": "dist",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2015",
+      "es2015.iterable",
+      "dom"
+    ]
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
