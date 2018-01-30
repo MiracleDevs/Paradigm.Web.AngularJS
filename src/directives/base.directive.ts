@@ -33,14 +33,14 @@ export abstract class DirectiveBase implements IDirective
         this.link = (s, e, a, c, t) =>
         {
             var element = $(e);
-            this.create(s, element, a, c, t);
-            s.$on("$destroy", () => this.dispose(s, element, a, c, t));
+            this.onInit(s, element, a, c, t);
+            s.$on("$destroy", () => this.onDestroy(s, element, a, c, t));
         };
     }
 
-    protected abstract create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void;
+    protected abstract onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void;
 
-    protected dispose(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onDestroy(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         instanceElement.remove();
     }

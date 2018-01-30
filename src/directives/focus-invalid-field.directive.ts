@@ -14,7 +14,7 @@ import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 })
 export class FocusInvalidField extends DirectiveBase
 {
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         instanceElement.on("submit", () =>
         {

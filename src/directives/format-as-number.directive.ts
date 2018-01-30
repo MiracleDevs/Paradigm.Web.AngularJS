@@ -15,7 +15,7 @@ import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 })
 export class FormatAsNumberDirective extends DirectiveBase
 {
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         if (!ObjectExtensions.isNull(controller))
         {

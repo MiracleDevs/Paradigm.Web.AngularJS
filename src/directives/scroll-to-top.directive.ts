@@ -23,7 +23,7 @@ export class ScrollToTopDirective extends DirectiveBase
         super();
     }
 
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         const options = {} as IScrollToTopParameters;
 

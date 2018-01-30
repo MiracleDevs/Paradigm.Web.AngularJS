@@ -14,7 +14,7 @@ import  * as $ from "jquery";
 })
 export class ScrollToggleClassDirective extends DirectiveBase
 {
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         var self = this;
 
@@ -46,10 +46,10 @@ export class ScrollToggleClassDirective extends DirectiveBase
             element.removeClass(options.cssClass);
     }
 
-    protected dispose(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onDestroy(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         $(window).unbind("scroll.scrollToggleClass");
-        super.dispose(scope, instanceElement, instanceAttributes, controller, transclude);
+        super.onDestroy(scope, instanceElement, instanceAttributes, controller, transclude);
     }
 
     static factory(): ScrollToggleClassDirective

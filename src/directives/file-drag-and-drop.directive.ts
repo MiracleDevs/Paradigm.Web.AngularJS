@@ -13,7 +13,7 @@ import { Directive } from "../decorators/directive";
 })
 export class FileDragAndDropDirective extends DirectiveBase
 {
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         instanceElement[0].addEventListener("dragenter", () => instanceElement.addClass("file-drag-enter"), false);
         instanceElement[0].addEventListener("dragexit", () => instanceElement.removeClass("file-drag-enter"), false);

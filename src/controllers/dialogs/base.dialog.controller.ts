@@ -6,26 +6,34 @@
 
 import { IScope, auto } from "angular";
 import { ControllerBase } from "../base.controller";
-import { ModalInstance } from "../../services/modal.service";
+import { ModalInstance, ModalService } from "../../services/modal.service";
 import { InjectorService } from "../../services/injector.service";
 
 export abstract class DialogControllerBase extends ControllerBase
 {
     protected modalInstance: ModalInstance;
 
+    protected modalService: ModalService;
+
     protected constructor(scope: IScope, modalInstance: ModalInstance, injector: InjectorService)
     {
         super(scope, injector);
 
         this.modalInstance = modalInstance;
+        this.modalService = this.getService(ModalService);
     }
 
-    cancel()
+    isActiveDialog(): boolean
+    {
+        return this.modalService.modals.last().key === this.modalInstance;
+    }
+
+    cancel(): void
     {
         this.modalInstance.close();
     }
 
-    protected close(result: any = null)
+    protected close(result: any = null): void
     {
         this.modalInstance.resolve(result);
     }

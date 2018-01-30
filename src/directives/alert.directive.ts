@@ -26,10 +26,10 @@ export class AlertDirective extends DirectiveBase
         super();
     }
 
-    protected create(scope: IAlertScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IAlertScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         const alertType = scope.alertType;
-        const timeout = parseInt(scope.timeout);
+        const timeout = parseInt(scope.timeout, 10);
 
         instanceElement.addClass("alert");
 

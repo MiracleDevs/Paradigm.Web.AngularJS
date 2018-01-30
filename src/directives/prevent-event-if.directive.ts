@@ -25,7 +25,7 @@ export class PreventEventIfDirective extends DirectiveBase
         super();
     }
 
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         instanceElement.on(scope["preventEvent"], e =>
         {

@@ -22,7 +22,7 @@ export class MdUiSrefActiveDirective extends DirectiveBase
         super();
     }
 
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         var cssClass = instanceAttributes["mdUiSrefActive"];
         var state = this.interpolate(instanceAttributes["mdUiSref"] || instanceAttributes["uiSref"])(scope);
@@ -50,7 +50,7 @@ export class MdUiSrefActiveDirective extends DirectiveBase
         });
     }
 
-    protected dispose(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onDestroy(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         var hookOff = instanceElement["transition-event"];
 
@@ -60,7 +60,7 @@ export class MdUiSrefActiveDirective extends DirectiveBase
             instanceElement["transition-event"] = null;
         }
 
-        super.dispose(scope, instanceElement, instanceAttributes, controller, transclude);
+        super.onDestroy(scope, instanceElement, instanceAttributes, controller, transclude);
     }
 
     static factory(interpolate: IInterpolateService, state: StateService, transitions: Transition): MdUiSrefActiveDirective

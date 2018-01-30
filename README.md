@@ -17,6 +17,15 @@ npm install --save @miracledevs/paradigm-ui-web-angularjs
 
 Change log
 ---
+
+Version `1.2.4`
+- Fixed bug on KeyboardListener directive disposing all event listeners when using several instances.
+- Fixed bug on DialogControllerBase not calling onInit.
+- Fixed bug on DialogControllerBase not calling onDestroy.
+- Fixed bug on ModalService not destroying the angular internal code.
+- Changed method `create` on directives to `onInit` to be similar to controllers and components.
+- Changed method `dispose` on directives to `onDestroy` to be similar to controllers and components.
+
 Version `1.2.3`
 - Changed repository from gitlab to github.
 

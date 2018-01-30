@@ -15,7 +15,7 @@ import  * as $ from "jquery";
 })
 export class RemoveClassDirective extends DirectiveBase
 {
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         const options = {} as IRemoveClassParameters;
 

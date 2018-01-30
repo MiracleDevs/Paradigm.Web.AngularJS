@@ -16,7 +16,7 @@ import  * as $ from "jquery";
 })
 export class ConvertToNumberDirective extends DirectiveBase
 {
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         controller.$parsers.push((val) => ObjectExtensions.isNull(val) ? parseInt(val, 10) : null);
         controller.$formatters.push((val) => val != null ? `${val}` : null);

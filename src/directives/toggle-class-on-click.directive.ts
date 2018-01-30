@@ -14,7 +14,7 @@ import  * as $ from "jquery";
 })
 export class ToggleClassOnClickDirective extends DirectiveBase
 {
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         var toggleElement = $(instanceAttributes["toggleElement"] || instanceElement);
         var toggleClass = instanceAttributes["toggleClass"];

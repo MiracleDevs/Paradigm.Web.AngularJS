@@ -14,7 +14,7 @@ import { IRootScopeService, IScope, IAttributes, IController, ITranscludeFunctio
 })
 export class ScrollToBottomDirective extends DirectiveBase
 {
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         const options = {} as IScrollToBottomParameters;
 

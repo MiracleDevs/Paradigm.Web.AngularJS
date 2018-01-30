@@ -22,7 +22,7 @@ export class HorizontalScrollerDirective extends DirectiveBase
         super();
     }
 
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         const options = {} as IHorizontalScrollerParameters;
 
@@ -46,10 +46,10 @@ export class HorizontalScrollerDirective extends DirectiveBase
         scope.$watch(() => instanceElement[0].innerHTML, () => instanceElement[0]["scrollerInstance"].enableScroll());
     }
 
-    protected dispose(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onDestroy(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         instanceElement[0]["scrollerInstance"].dispose();
-        super.dispose(scope, instanceElement, instanceAttributes, controller, transclude);
+        super.onDestroy(scope, instanceElement, instanceAttributes, controller, transclude);
     }
 
     static factory(interpolate: IInterpolateService): HorizontalScrollerDirective

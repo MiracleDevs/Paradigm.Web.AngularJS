@@ -20,7 +20,7 @@ export class FocusWhenDirective extends DirectiveBase
         super();
     }
 
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         var focusDelay = 100;
 

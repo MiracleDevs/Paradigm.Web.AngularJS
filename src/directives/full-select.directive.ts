@@ -13,7 +13,7 @@ import { IScope, IAttributes, IController, ITranscludeFunction } from "angular";
 })
 export class FullSelectDirective extends DirectiveBase
 {
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         instanceElement.on("focus", () => (instanceElement as any).select());
     }

@@ -19,7 +19,7 @@ import { ObjectExtensions, StringExtensions } from "@miracledevs/paradigm-ui-web
 })
 export class TooltipDirective extends DirectiveBase
 {
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         const options = this.getOptions<ITooltipOptions>(instanceAttributes, "tooltipsterOptions");
 

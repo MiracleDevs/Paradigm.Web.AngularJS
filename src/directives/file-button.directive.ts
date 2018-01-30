@@ -34,7 +34,7 @@ export class FileButtonDirective extends DirectiveBase
         this.timeout = timeout;
     }
 
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         const button = instanceElement.find("button");
         var file = instanceElement.find("input");

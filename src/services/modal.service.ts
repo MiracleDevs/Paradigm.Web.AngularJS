@@ -11,7 +11,7 @@ import { Dictionary, ObjectExtensions, Guid, FunctionExtensions } from "@miracle
 import { IController } from "../decorators/controller";
 import * as angular from "angular";
 import { registrableMetadataKey } from "../decorators/registrable";
-import  * as $ from "jquery";
+import * as $ from "jquery";
 import { transition } from "../scripts/bootstrap/transition";
 import { modal } from "../scripts/bootstrap/modal";
 
@@ -61,7 +61,7 @@ export class ModalService extends ServiceBase
 
         var modalInstance = new ModalInstance(this, this.$q.defer());
 
-        const template = !ObjectExtensions.isNull(dialogInfo.template)? dialogInfo.template : this.$templateCache.get<string>(dialogInfo.templateUrl);
+        const template = !ObjectExtensions.isNull(dialogInfo.template) ? dialogInfo.template : this.$templateCache.get<string>(dialogInfo.templateUrl);
 
         // TODO: search for a better way to handle templateCache. $http probably have a handler to store the result on cache instead of storning the whole result object.
         if (template == null)
@@ -111,7 +111,7 @@ export class ModalService extends ServiceBase
         controllerParameters[ModalParameters] = parameters;
 
         // instantiate the modal controller.
-        const controller = this.$controller(dialogInfo.controller, controllerParameters);
+        const controller = this.$controller(dialogInfo.controller, controllerParameters) as angular.IController;
 
         // set the controller alias (by default will be controller).
         scope[dialogInfo.controllerAs] = controller;
@@ -129,12 +129,6 @@ export class ModalService extends ServiceBase
 
         // register the modal inside the service.
         this.modals.add(modalInstance, code);
-
-        // setup the destroy event to clean the DOM.
-        scope.$on("$destroy", () =>
-        {
-            code.remove();
-        });
 
         const dialogOptions = {};
 
@@ -156,26 +150,30 @@ export class ModalService extends ServiceBase
         code.on("hidden.bs.modal", () =>
         {
             modalInstance.deferred.reject("cancelled");
-            this.removeModal(modalInstance, $(code), scope);
+            this.removeModal(modalInstance, $(code), scope, controller);
         });
+
+        controller.$onInit();
     }
 
-    private removeModal(modalInstance: ModalInstance, modal: JQuery, scope: angular.IScope): void
+    private removeModal(modalInstance: ModalInstance, modal: JQuery, scope: angular.IScope, controller: angular.IController): void
     {
-        if (modalInstance.dispose != null)
-            modalInstance.dispose();
-
         this.modals.remove(modalInstance);
 
-        if (!ObjectExtensions.isNull(scope) && !ObjectExtensions.isNull(scope["controllerAs"]))
+        if (!ObjectExtensions.isNull(scope) && !ObjectExtensions.isNull(controller))
         {
-            delete scope["controllerAs"];
+            controller.$onDestroy();
             scope.$destroy();
         }
 
         if (!ObjectExtensions.isNull(modal))
         {
             modal.remove();
+        }
+
+        if (modalInstance.dispose != null)
+        {
+            modalInstance.dispose();
         }
     }
 

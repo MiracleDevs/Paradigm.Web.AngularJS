@@ -14,7 +14,7 @@ import  * as $ from "jquery";
 })
 export class SelectToggleClassDirective extends DirectiveBase
 {
-    protected create(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         var className = instanceAttributes["selectToggleClass"];
 
@@ -32,10 +32,10 @@ export class SelectToggleClassDirective extends DirectiveBase
         });
     }
 
-    protected dispose(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onDestroy(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         $("html").unbind("click.selectToggleClass");
-        super.dispose(scope, instanceElement, instanceAttributes, controller, transclude);
+        super.onDestroy(scope, instanceElement, instanceAttributes, controller, transclude);
     }
 
     static factory(): SelectToggleClassDirective

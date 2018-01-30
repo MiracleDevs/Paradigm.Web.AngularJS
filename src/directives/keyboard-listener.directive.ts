@@ -27,17 +27,18 @@ export class KeyboardListenerDirective extends DirectiveBase
         super();
     }
 
-    protected create(scope: IKeyboardListenerScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onInit(scope: IKeyboardListenerScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
-        var actions = "";
+        var actions = ``;
         var attachTo = $(scope.attachTo || document);
+        var id = instanceElement[0].id;
 
-        instanceElement.find("listener").each((index, element) =>
+        instanceElement.find(`listener`).each((index, element) =>
         {
-            actions += element.getAttribute("action") + "|";
+            actions += element.getAttribute(`action`) + `|`;
         });
 
-        if (actions[actions.length - 1] === "|")
+        if (actions[actions.length - 1] === `|`)
             actions = actions.substr(0, actions.length - 1);
 
         var keyActions = this.keyProcessor.parseActions(actions);
@@ -48,7 +49,7 @@ export class KeyboardListenerDirective extends DirectiveBase
             if (scope.disabled)
                 return;
 
-            keyProcessor.evaluateKeyActions(keyActions, "keypress", scope.$parent, e);
+            keyProcessor.evaluateKeyActions(keyActions, `keypress`, scope.$parent, e);
         }
 
         function evaluateKeyDown(e: JQueryKeyEventObject): void
@@ -56,7 +57,7 @@ export class KeyboardListenerDirective extends DirectiveBase
             if (scope.disabled)
                 return;
 
-            keyProcessor.evaluateKeyActions(keyActions, "keydown", scope.$parent, e);
+            keyProcessor.evaluateKeyActions(keyActions, `keydown`, scope.$parent, e);
         }
 
         function evaluateKeyUp(e: JQueryKeyEventObject): void
@@ -64,28 +65,29 @@ export class KeyboardListenerDirective extends DirectiveBase
             if (scope.disabled)
                 return;
 
-            keyProcessor.evaluateKeyActions(keyActions, "keyup", scope.$parent, e);
+            keyProcessor.evaluateKeyActions(keyActions, `keyup`, scope.$parent, e);
         }
 
-        if (keyActions.any(x => x.eventType === "keypress"))
-            attachTo.on("keypress.documentKeyboard", evaluateKeyPress);
+        if (keyActions.any(x => x.eventType === `keypress`))
+            attachTo.on(`keypress.${id}.documentKeyboard`, evaluateKeyPress);
 
-        if (keyActions.any(x => x.eventType === "keydown"))
-            attachTo.on("keydown.documentKeyboard", evaluateKeyDown);
+        if (keyActions.any(x => x.eventType === `keydown`))
+            attachTo.on(`keydown.${id}.documentKeyboard`, evaluateKeyDown);
 
-        if (keyActions.any(x => x.eventType === "keyup"))
-            attachTo.on("keyup.documentKeyboard", evaluateKeyUp);
+        if (keyActions.any(x => x.eventType === `keyup`))
+            attachTo.on(`keyup.${id}.documentKeyboard`, evaluateKeyUp);
     }
 
-    protected dispose(scope: IKeyboardListenerScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
+    protected onDestroy(scope: IKeyboardListenerScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
     {
         var attachTo = $(scope.attachTo || document);
+        var id = instanceElement[0].id;
 
-        attachTo.off("keypress.documentKeyboard");
-        attachTo.off("keydown.documentKeyboard");
-        attachTo.off("keyup.documentKeyboard");
+        attachTo.off(`keypress.${id}.documentKeyboard`);
+        attachTo.off(`keydown.${id}.documentKeyboard`);
+        attachTo.off(`keyup.${id}.documentKeyboard`);
 
-        super.dispose(scope, instanceElement, instanceAttributes, controller, transclude);
+        super.onDestroy(scope, instanceElement, instanceAttributes, controller, transclude);
     }
 
     static factory(keyProcessor: KeyProcessorService): KeyboardListenerDirective
