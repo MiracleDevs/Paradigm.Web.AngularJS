@@ -18,6 +18,10 @@ npm install --save @miracledevs/paradigm-ui-web-angularjs
 Change log
 ---
 
+Version `1.2.5`
+- Updated npm dependencies.
+
+
 Version `1.2.4`
 - Fixed bug on KeyboardListener directive disposing all event listeners when using several instances.
 - Fixed bug on DialogControllerBase not calling onInit.
