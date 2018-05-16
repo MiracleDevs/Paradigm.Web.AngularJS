@@ -18,12 +18,12 @@ export class TestLoggingService extends LoggingService
     {
         super();
         this.logWritten = [];
-        this.logWritten.push(0);
-        this.logWritten.push(0);
-        this.logWritten.push(0);
-        this.logWritten.push(0);
-        this.logWritten.push(0);
-        this.logWritten.push(0);
+        this.logWritten[LogType.Trace] = 0;
+        this.logWritten[LogType.Debug] = 0;
+        this.logWritten[LogType.Information] = 0;
+        this.logWritten[LogType.Warning] = 0;
+        this.logWritten[LogType.Error] = 0;
+        this.logWritten[LogType.Critical] = 0;
     }
 
     log(message: string, type: LogType = LogType.Trace, tag: string = null): void

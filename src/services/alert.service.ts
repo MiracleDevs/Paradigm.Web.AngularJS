@@ -62,6 +62,11 @@ export class AlertService extends ServiceBase
         return this.alerts;
     }
 
+    clear(): void
+    {
+        this.alerts.clear();
+    }
+
     static getLogType(alertType: AlertType): LogType
     {
         switch (alertType)
@@ -87,9 +92,9 @@ export class AlertService extends ServiceBase
 
 export enum AlertType
 {
-    Message,
-    Warning,
-    Error
+    Message = LogType.Information,
+    Warning = LogType.Warning,
+    Error = LogType.Error
 }
 
 export class Alert

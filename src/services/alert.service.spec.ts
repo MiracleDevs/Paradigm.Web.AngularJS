@@ -17,7 +17,7 @@ describe("AlertService", () =>
 {
     var injector: InjectorService;
     var alertService: AlertService;
-    var logger = new TestLoggingService();
+    var logger: TestLoggingService;
 
     beforeEach(() =>
     {
@@ -27,6 +27,7 @@ describe("AlertService", () =>
         // inject a dummy logging service to prevent undesired logging.
         mock.module($provide =>
         {
+            logger = new TestLoggingService();
             $provide.value(getRegistrableName(LoggingService), logger);
         });
     });
@@ -109,6 +110,12 @@ describe("AlertService", () =>
             expect(alert.type).toBe(AlertType.Message);
             expect(alert.message).toBe("testing message");
         });
+
+        it("should clear all messages", () =>
+        {
+            alertService.clear();
+            expect(alertService.getAlerts().count()).toBe(0);
+        });
     });
 
     describe("working with warnings", () =>
@@ -143,6 +150,12 @@ describe("AlertService", () =>
             expect(alert.type).toBe(AlertType.Warning);
             expect(alert.message).toBe("testing warning");
         });
+
+        it("should clear all warnings", () =>
+        {
+            alertService.clear();
+            expect(alertService.getAlerts().count()).toBe(0);
+        });
     });
 
     describe("working with errors", () =>
@@ -176,6 +189,12 @@ describe("AlertService", () =>
             alertService.remove(0);
             expect(alert.type).toBe(AlertType.Error);
             expect(alert.message).toBe("testing error");
+        });
+
+        it("should clear all errors", () =>
+        {
+            alertService.clear();
+            expect(alertService.getAlerts().count()).toBe(0);
         });
     });
 });
