@@ -5,7 +5,7 @@
  */
 
 var gulp = require("gulp");
-var util = require("gulp-util");
+var log = require("fancy-log");
 var typescript = require("gulp-typescript");
 var yargs = require("yargs");
 var clean = require("gulp-clean");
@@ -15,9 +15,9 @@ var path = require("path");
 var sourceConfigName = path.resolve(yargs.argv["tsconfig"] || "tsconfig.code.json");
 var karmaConfigName = path.resolve(yargs.argv["karma"] || "karma.conf.js");
 
-util.log("-----------------------------------------");
-util.log("Configuration: " + sourceConfigName);
-util.log("-----------------------------------------");
+log("-----------------------------------------");
+log("Configuration: " + sourceConfigName);
+log("-----------------------------------------");
 
 var tsProject = typescript.createProject(sourceConfigName);
 
