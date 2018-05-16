@@ -256,7 +256,8 @@ export abstract class ModuleBase implements IModule
                 url: controllerInfo.stateUrl,
                 templateUrl: controllerInfo.templateUrl,
                 template: controllerInfo.template,
-                resolve: controllerInfo.resolve
+                resolve: controllerInfo.resolve,
+                params: controllerInfo.params
             } as Ng1StateDeclaration);
     }
 

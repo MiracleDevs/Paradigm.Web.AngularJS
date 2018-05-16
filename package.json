@@ -1,11 +1,11 @@
 {
   "name": "@miracledevs/paradigm-ui-web-angularjs",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "A typescript library that wraps angularjs in a object oriented way, allowing for a cleaner approach to angularjs.",
   "author": "Miracle Devs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "license":  "MIT",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/MiracleDevs/Paradigm.Web.AngularJS.git"

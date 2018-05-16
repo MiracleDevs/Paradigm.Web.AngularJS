@@ -6,6 +6,7 @@
 
 import { IRegistrable, registrableMetadataKey } from "./registrable";
 import { ObjectExtensions, FunctionExtensions } from "@miracledevs/paradigm-ui-web-shared";
+import { ParamDeclaration } from "@uirouter/angularjs";
 
 export function Controller(parameters: IController): <T>(constructor: { new(...args: any[]): T }) => void
 {
@@ -53,4 +54,8 @@ export interface IController extends IRegistrable
     controllerAs?: string;
 
     resolve?: Object;
+
+    params?: {
+        [key: string]: (ParamDeclaration | any);
+    };
 }

@@ -18,6 +18,12 @@ npm install --save @miracledevs/paradigm-ui-web-angularjs
 Change log
 ---
 
+Version `1.2.6`
+- Added state parameter configuration to the controller decorator.
+  Now the parameters can be configured individually according to the
+  ui-router specification [here](https://ui-router.github.io/ng1/docs/latest/interfaces/params.paramdeclaration.html)
+
+
 Version `1.2.5`
 - Updated npm dependencies.
 
