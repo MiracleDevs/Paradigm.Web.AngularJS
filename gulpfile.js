@@ -28,7 +28,7 @@ gulp.task("clean-sources", function ()
         .pipe(clean({ force: true }));
 });
 
-gulp.task("build", ["clean-sources"], function ()
+gulp.task("build", gulp.series("clean-sources", function ()
 {
     var result = tsProject.src().pipe(tsProject());
 
@@ -41,7 +41,7 @@ gulp.task("build", ["clean-sources"], function ()
     .pipe(gulp.dest(tsProject.config.compilerOptions.outDir));
 
     return result;
-});
+}));
 
 gulp.task("test", function (callback)
 {
@@ -49,4 +49,4 @@ gulp.task("test", function (callback)
     return karmaServer.start();
 });
 
-gulp.task("default", ["build"]);
+gulp.task("default", gulp.series("build"));

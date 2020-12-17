@@ -23,7 +23,7 @@ function addBinding(binding: string, target: Object, propertyKey: string | symbo
     if (ObjectExtensions.isNull(parameters.bindings))
         parameters.bindings = {};
 
-    parameters.bindings[propertyKey] = binding;
+    (parameters.bindings as any)[propertyKey] = binding;
 }
 
 export function Component(parameters: IComponent): <T>(constructor: { new(...args: any[]): T }) => void
@@ -113,7 +113,7 @@ export function Require(controller: string | Function, searchOnParents: boolean 
         if (searchOnParents)
             controllerName = "^" + controllerName;
 
-        parameters.require[propertyKey] = controllerName;
+        (parameters.require as any)[propertyKey] = controllerName;
     };
 }
 

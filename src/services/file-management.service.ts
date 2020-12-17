@@ -24,7 +24,7 @@ export class FileManagementService extends ServiceBase
     read(file: File, completed: (file: File, content: string) => void, progress?: (p: number) => void, error?: (e: string) => void): void
     {
         const reader = new FileReader();
-        reader.onload = e => this.timeout(() => completed(file, btoa(e.target["result"])));
+        reader.onload = e => this.timeout(() => completed(file, btoa(e.target["result"] as string)));
 
         if (!ObjectExtensions.isNull(progress))
             reader.onprogress = e =>

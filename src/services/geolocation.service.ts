@@ -11,7 +11,7 @@ import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 @Service({ name: "$pd-geolocationService"})
 export class GeolocationService extends ServiceBase
 {
-    getPosition(callback: (info: IGeolocationInformation) => void, onError?: (error: PositionError) => void, options?: IPositionOptions): void
+    getPosition(callback: (info: IGeolocationInformation) => void, onError?: (error: GeolocationPositionError) => void, options?: IPositionOptions): void
     {
         if (!this.isAvailable())
             return;
@@ -19,7 +19,7 @@ export class GeolocationService extends ServiceBase
         this.getGeolocator().getCurrentPosition(callback, onError, options);
     }
 
-    watchPosition(callback: (info: IGeolocationInformation) => void, onError?: (error: PositionError) => void, options?: IPositionOptions): number
+    watchPosition(callback: (info: IGeolocationInformation) => void, onError?: (error: GeolocationPositionError) => void, options?: IPositionOptions): number
     {
         if (!this.isAvailable())
             return -1;

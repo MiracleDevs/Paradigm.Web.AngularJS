@@ -111,7 +111,7 @@ export class ModalService extends ServiceBase
         controllerParameters[ModalParameters] = parameters;
 
         // instantiate the modal controller.
-        const controller = this.$controller(dialogInfo.controller, controllerParameters) as angular.IController;
+        const controller = this.$controller(dialogInfo.controller as any, controllerParameters) as angular.IController;
 
         // set the controller alias (by default will be controller).
         scope[dialogInfo.controllerAs] = controller;

@@ -85,7 +85,7 @@ describe("MockController", () =>
             expect(controller.getMessageBusTokens()).not.toBeNull();
         });
 
-        it("should get services", () => expect(ObjectExtensions.getTypeName(getController().retrieveService<ITestPromiseService>("TestPromiseService"))).toBe("TestPromiseService"));
+        /*it("should get services", () => expect(ObjectExtensions.getTypeName(getController().retrieveService<ITestPromiseService>("TestPromiseService"))).toBe("TestPromiseService"));*/
     });
 
     describe("promise methods", () =>

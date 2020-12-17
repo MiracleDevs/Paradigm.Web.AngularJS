@@ -18,6 +18,11 @@ npm install --save @miracledevs/paradigm-ui-web-angularjs
 Change log
 ---
 
+Version `1.3.0`
+- Updated dependencies to the latest version.
+- Updated to angular 1.8.2
+- Updated gulp file.
+
 Version `1.2.6`
 - Added state parameter configuration to the controller decorator.
   Now the parameters can be configured individually according to the
