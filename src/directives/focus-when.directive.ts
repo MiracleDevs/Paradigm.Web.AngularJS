@@ -11,45 +11,37 @@ import { ITimeoutService, IScope, IAttributes, IController, ITranscludeFunction 
 
 @Directive({
     name: "focusWhen",
-    dependencies: [AngularServices.timeout]
+    dependencies: [AngularServices.timeout],
 })
-export class FocusWhenDirective extends DirectiveBase
-{
-    constructor(private timeout: ITimeoutService)
-    {
+export class FocusWhenDirective extends DirectiveBase {
+    constructor(private timeout: ITimeoutService) {
         super();
     }
 
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         var focusDelay = 100;
 
-        if (instanceAttributes["focus-delay"])
-            focusDelay = parseInt(instanceAttributes["focus-delay"], 10);
+        if (instanceAttributes["focus-delay"]) focusDelay = parseInt(instanceAttributes["focus-delay"], 10);
 
-        scope.$watch(() => instanceAttributes["focusWhen"], () =>
-        {
-            this.timeout(() =>
-            {
-                try
-                {
-                    const model = scope.$eval(instanceAttributes["focusWhen"]);
+        scope.$watch(
+            () => instanceAttributes["focusWhen"],
+            () => {
+                this.timeout(() => {
+                    try {
+                        const model = scope.$eval(instanceAttributes["focusWhen"]);
 
-                    if (model)
-                    {
-                        instanceElement.focus();
+                        if (model) {
+                            instanceElement.focus();
+                        }
+                    } catch (e) {
+                        // ignore exceptions
                     }
-                }
-                catch (e)
-                {
-                    // ignore exceptions
-                }
-            }, focusDelay);
-        });
+                }, focusDelay);
+            }
+        );
     }
 
-    static factory(timeout: ITimeoutService): FocusWhenDirective
-    {
+    static factory(timeout: ITimeoutService): FocusWhenDirective {
         return new FocusWhenDirective(timeout);
     }
 }

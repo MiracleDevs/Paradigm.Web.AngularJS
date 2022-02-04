@@ -13,49 +13,38 @@ import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
 @Directive({
     name: "mdUiSrefActive",
-    dependencies: [AngularServices.interpolate, AngularServices.state, AngularServices.transitions]
+    dependencies: [AngularServices.interpolate, AngularServices.state, AngularServices.transitions],
 })
-export class MdUiSrefActiveDirective extends DirectiveBase
-{
-    constructor(private interpolate: IInterpolateService, private state: StateService, private transitions: Transition)
-    {
+export class MdUiSrefActiveDirective extends DirectiveBase {
+    constructor(private interpolate: IInterpolateService, private state: StateService, private transitions: Transition) {
         super();
     }
 
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         var cssClass = instanceAttributes["mdUiSrefActive"];
         var state = this.interpolate(instanceAttributes["mdUiSref"] || instanceAttributes["uiSref"])(scope);
 
-        function update(toState: StateDeclaration): void
-        {
-            if (ObjectExtensions.isNull(toState) || ObjectExtensions.isNull(toState.name))
-                return;
+        function update(toState: StateDeclaration): void {
+            if (ObjectExtensions.isNull(toState) || ObjectExtensions.isNull(toState.name)) return;
 
-            if ((toState.name as string).indexOf(state) !== -1)
-            {
+            if ((toState.name as string).indexOf(state) !== -1) {
                 instanceElement.addClass(cssClass);
-            }
-            else
-            {
+            } else {
                 instanceElement.removeClass(cssClass);
             }
         }
 
         update(this.state.current);
 
-        instanceElement["transition-event"] = this.transitions.onSuccess({}, () =>
-        {
+        instanceElement["transition-event"] = this.transitions.onSuccess({}, () => {
             update(this.state.current);
         });
     }
 
-    protected onDestroy(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+    protected onDestroy(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         var hookOff = instanceElement["transition-event"];
 
-        if (!ObjectExtensions.isNull(hookOff))
-        {
+        if (!ObjectExtensions.isNull(hookOff)) {
             instanceElement["transition-event"]();
             instanceElement["transition-event"] = null;
         }
@@ -63,8 +52,7 @@ export class MdUiSrefActiveDirective extends DirectiveBase
         super.onDestroy(scope, instanceElement, instanceAttributes, controller, transclude);
     }
 
-    static factory(interpolate: IInterpolateService, state: StateService, transitions: Transition): MdUiSrefActiveDirective
-    {
+    static factory(interpolate: IInterpolateService, state: StateService, transitions: Transition): MdUiSrefActiveDirective {
         return new MdUiSrefActiveDirective(interpolate, state, transitions);
     }
 }

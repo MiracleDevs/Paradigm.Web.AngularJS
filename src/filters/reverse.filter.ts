@@ -6,11 +6,9 @@
 
 import { Filter } from "../decorators/filter";
 
-@Filter({name: "pd-reverse"})
-export class ReverseFilter
-{
-    static factory(): (items: any[]) => any[]
-    {
+@Filter({ name: "pd-reverse" })
+export class ReverseFilter {
+    static factory(): (items: any[]) => any[] {
         return items => items.slice().reverse();
     }
 }

@@ -4,8 +4,7 @@
  * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
-export class AngularFilters
-{
+export class AngularFilters {
     static readonly currency = "currency";
     static readonly number = "number";
     static readonly date = "date";

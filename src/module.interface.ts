@@ -6,8 +6,7 @@
 
 import { IModule as IAngularModule } from "angular";
 
-export interface IModule
-{
+export interface IModule {
     getModule(): IAngularModule;
 
     getModuleName(): string;

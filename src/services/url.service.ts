@@ -12,31 +12,24 @@ import { StringExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
 @Service({
     name: "$pd-urlService",
-    dependencies: [AngularServices.sce]
+    dependencies: [AngularServices.sce],
 })
-export class UrlService extends ServiceBase
-{
-    constructor(private sce: ISCEService)
-    {
+export class UrlService extends ServiceBase {
+    constructor(private sce: ISCEService) {
         super();
     }
 
-    getParsedUrl(url: string): string
-    {
-        if (!StringExtensions.isString(url))
-            return url;
+    getParsedUrl(url: string): string {
+        if (!StringExtensions.isString(url)) return url;
 
-        if (StringExtensions.isNullOrEmpty(url))
-            return url;
+        if (StringExtensions.isNullOrEmpty(url)) return url;
 
-        if (url.indexOf("http://") < 0 && url.indexOf("https://") < 0)
-            url = `http://${url}`;
+        if (url.indexOf("http://") < 0 && url.indexOf("https://") < 0) url = `http://${url}`;
 
         return this.sce.trustAsUrl(url);
     }
 
-    static factory(sce: ISCEService): UrlService
-    {
+    static factory(sce: ISCEService): UrlService {
         return new UrlService(sce);
     }
 }

@@ -5,41 +5,37 @@
  */
 
 import { Directive } from "../decorators/directive";
-import { AngularServices } from "../services/angular.service";
 import { DirectiveBase } from "./base.directive";
-import { IRootScopeService, IScope, IAttributes, IController, ITranscludeFunction } from "angular";
+import { IScope, IAttributes, IController, ITranscludeFunction } from "angular";
 
 @Directive({
-    name: "scrollToBottom"
+    name: "scrollToBottom",
 })
-export class ScrollToBottomDirective extends DirectiveBase
-{
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+export class ScrollToBottomDirective extends DirectiveBase {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         const options = {} as IScrollToBottomParameters;
 
         this.tryGetBoolean(options, instanceAttributes, "onContentChange");
         this.tryGetBoolean(options, instanceAttributes, "onClick");
 
-        if (options.onContentChange)
-        {
-            scope.$watch(() => instanceElement[0].innerHTML, () => instanceElement.scrollTop(instanceElement[0].scrollHeight));
+        if (options.onContentChange) {
+            scope.$watch(
+                () => instanceElement[0].innerHTML,
+                () => instanceElement.scrollTop(instanceElement[0].scrollHeight)
+            );
         }
 
-        if (options.onClick)
-        {
+        if (options.onClick) {
             instanceElement.on("click", () => instanceElement.scrollTop(0));
         }
     }
 
-    static factory(): ScrollToBottomDirective
-    {
+    static factory(): ScrollToBottomDirective {
         return new ScrollToBottomDirective();
     }
 }
 
-export interface IScrollToBottomParameters
-{
+export interface IScrollToBottomParameters {
     onClick: boolean;
 
     onContentChange: boolean;

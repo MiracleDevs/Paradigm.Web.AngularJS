@@ -7,11 +7,9 @@
 import { Filter } from "../decorators/filter";
 import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
-@Filter({name: "pd-lowercase"})
-export class LowercaseFilter
-{
-    static factory(): (value: string) => string
-    {
-        return value => ObjectExtensions.isNull(value) ? null : value.toLowerCase();
+@Filter({ name: "pd-lowercase" })
+export class LowercaseFilter {
+    static factory(): (value: string) => string {
+        return value => (ObjectExtensions.isNull(value) ? null : value.toLowerCase());
     }
 }

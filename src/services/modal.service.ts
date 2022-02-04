@@ -20,17 +20,9 @@ modal($);
 
 @Service({
     name: "$pd-modalService",
-    dependencies: [
-        AngularServices.rootScope,
-        AngularServices.q,
-        AngularServices.http,
-        AngularServices.templateCache,
-        AngularServices.compile,
-        AngularServices.controller
-    ]
+    dependencies: [AngularServices.rootScope, AngularServices.q, AngularServices.http, AngularServices.templateCache, AngularServices.compile, AngularServices.controller],
 })
-export class ModalService extends ServiceBase
-{
+export class ModalService extends ServiceBase {
     readonly modals: Dictionary<ModalInstance, JQuery>;
 
     constructor(
@@ -40,21 +32,17 @@ export class ModalService extends ServiceBase
         private $templateCache: ng.ITemplateCacheService,
         private $compile: ng.ICompileService,
         private $controller: ng.IControllerService
-    )
-    {
+    ) {
         super();
         this.modals = new Dictionary<ModalInstance, JQuery>();
     }
 
-    open(dialog: IController | Function, parameters?: any, staticDialog: boolean = false, keyboard: boolean = true): ModalInstance
-    {
-        var dialogInfo = ObjectExtensions.getTypeName(dialog) === "Function" ? dialog[registrableMetadataKey] as IController : dialog as IController;
+    open(dialog: IController | Function, parameters?: any, staticDialog: boolean = false, keyboard: boolean = true): ModalInstance {
+        var dialogInfo = ObjectExtensions.getTypeName(dialog) === "Function" ? (dialog[registrableMetadataKey] as IController) : (dialog as IController);
 
-        if (dialogInfo == null)
-            throw new Error("The modal controller registration information is missing.");
+        if (dialogInfo == null) throw new Error("The modal controller registration information is missing.");
 
-        if (ObjectExtensions.isNull(dialogInfo.template) &&
-            ObjectExtensions.isNull(dialogInfo.templateUrl))
+        if (ObjectExtensions.isNull(dialogInfo.template) && ObjectExtensions.isNull(dialogInfo.templateUrl))
             throw new Error("Can not obtain a template for the modal. Use either template or templateUrl");
 
         var controllerAs = dialogInfo.controllerAs || "controller";
@@ -66,42 +54,34 @@ export class ModalService extends ServiceBase
         // TODO: search for a better way to handle templateCache. $http probably have a handler to store the result on cache instead of storning the whole result object.
         if (template == null)
             this.$http.get<string>(dialogInfo.templateUrl, { cache: this.$templateCache }).then(result => this.openModal(dialogInfo, parameters, modalInstance, result.data, staticDialog, keyboard));
-        else
-            this.openModal(dialogInfo, parameters, modalInstance, ObjectExtensions.getTypeName(template).toLowerCase() === "string" ? template : template[1], staticDialog, keyboard);
+        else this.openModal(dialogInfo, parameters, modalInstance, ObjectExtensions.getTypeName(template).toLowerCase() === "string" ? template : template[1], staticDialog, keyboard);
 
         return modalInstance;
     }
 
-    close(modalInstance: ModalInstance, reason?: string): void
-    {
+    close(modalInstance: ModalInstance, reason?: string): void {
         const modal = this.modals.get(modalInstance);
 
-        if (modal == null)
-            return;
+        if (modal == null) return;
 
-        if (ObjectExtensions.isNull(modal["modal"]))
-            return;
+        if (ObjectExtensions.isNull(modal["modal"])) return;
 
         modal["modal"]("hide");
         modalInstance.deferred.reject(reason);
     }
 
-    resolve<T>(modalInstance: ModalInstance, result: T): void
-    {
+    resolve<T>(modalInstance: ModalInstance, result: T): void {
         const modal = this.modals.get(modalInstance);
 
-        if (modal == null)
-            return;
+        if (modal == null) return;
 
-        if (ObjectExtensions.isNull(modal["modal"]))
-            return;
+        if (ObjectExtensions.isNull(modal["modal"])) return;
 
         modal["modal"]("hide");
         modalInstance.deferred.resolve(result);
     }
 
-    private openModal(dialogInfo: IController, parameters: any, modalInstance: ModalInstance, template: string, staticDialog: boolean, keyboard: boolean): void
-    {
+    private openModal(dialogInfo: IController, parameters: any, modalInstance: ModalInstance, template: string, staticDialog: boolean, keyboard: boolean): void {
         // create a new scope for the modal dialog.
         const scope = this.$rootScope.$new(true);
         const controllerParameters = {};
@@ -132,11 +112,9 @@ export class ModalService extends ServiceBase
 
         const dialogOptions = {};
 
-        if (staticDialog)
-            dialogOptions["backdrop"] = "static";
+        if (staticDialog) dialogOptions["backdrop"] = "static";
 
-        if (keyboard)
-            dialogOptions["keyboard"] = keyboard;
+        if (keyboard) dialogOptions["keyboard"] = keyboard;
 
         // open the MaterializeCSS modal.
         code["modal"](dialogOptions);
@@ -147,8 +125,7 @@ export class ModalService extends ServiceBase
         code.css("z-index", zIndex);
         $(code[0].nextElementSibling).css("z-index", zIndex - 10);
 
-        code.on("hidden.bs.modal", () =>
-        {
+        code.on("hidden.bs.modal", () => {
             modalInstance.deferred.reject("cancelled");
             this.removeModal(modalInstance, $(code), scope, controller);
         });
@@ -156,23 +133,19 @@ export class ModalService extends ServiceBase
         controller.$onInit();
     }
 
-    private removeModal(modalInstance: ModalInstance, modal: JQuery, scope: angular.IScope, controller: angular.IController): void
-    {
+    private removeModal(modalInstance: ModalInstance, modal: JQuery, scope: angular.IScope, controller: angular.IController): void {
         this.modals.remove(modalInstance);
 
-        if (!ObjectExtensions.isNull(scope) && !ObjectExtensions.isNull(controller))
-        {
+        if (!ObjectExtensions.isNull(scope) && !ObjectExtensions.isNull(controller)) {
             controller.$onDestroy();
             scope.$destroy();
         }
 
-        if (!ObjectExtensions.isNull(modal))
-        {
+        if (!ObjectExtensions.isNull(modal)) {
             modal.remove();
         }
 
-        if (modalInstance.dispose != null)
-        {
+        if (modalInstance.dispose != null) {
             modalInstance.dispose();
         }
     }
@@ -184,14 +157,12 @@ export class ModalService extends ServiceBase
         $templateCache: ng.ITemplateCacheService,
         $compile: ng.ICompileService,
         $controller: ng.IControllerService
-    ): ModalService
-    {
+    ): ModalService {
         return new ModalService($rootScope, $q, $http, $templateCache, $compile, $controller);
     }
 }
 
-export class ModalInstance
-{
+export class ModalInstance {
     private readonly modalService: ModalService;
 
     deferred: ng.IDeferred<any>;
@@ -200,20 +171,17 @@ export class ModalInstance
 
     dispose: () => void;
 
-    public constructor(modalService: ModalService, deferred: ng.IDeferred<any>)
-    {
+    public constructor(modalService: ModalService, deferred: ng.IDeferred<any>) {
         this.modalService = modalService;
         this.deferred = deferred;
         this.promise = deferred.promise;
     }
 
-    close(reason?: string): void
-    {
+    close(reason?: string): void {
         this.modalService.close(this, reason);
     }
 
-    resolve(result: any): void
-    {
+    resolve(result: any): void {
         this.modalService.resolve(this, result);
     }
 }

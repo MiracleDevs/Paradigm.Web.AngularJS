@@ -4,51 +4,42 @@
  * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
-import { ObjectExtensions, FunctionExtensions } from "@miracledevs/paradigm-ui-web-shared";
-import { IRootScopeService, IComponentControllerService, auto, mock } from "angular";
+import { IRootScopeService, auto, mock } from "angular";
 import { FrameworkModule } from "../framework.module";
 import { AngularServices } from "../services/angular.service";
 import { MockComponent } from "../mocks/mock.component.spec";
 import { IComponent } from "../decorators/component";
 import { LoggingService } from "../services/logging.service";
 import { InjectorService } from "../services/injector.service";
-import { AlertService } from "../services/alert.service";
 import { registrableMetadataKey, getRegistrableName } from "../decorators/registrable";
 
-describe("MockComponent", () =>
-{
+describe("MockComponent", () => {
     var rootScopeService: IRootScopeService;
     var injector: InjectorService;
     var logger = new LoggingService();
 
-    beforeEach(() =>
-    {
+    beforeEach(() => {
         // create a new framework module with all the configuration.
         mock.module(FrameworkModule.instance.getModuleName());
 
         // inject a dummy logging service to prevent undesired logging.
-        mock.module($provide =>
-        {
+        mock.module($provide => {
             $provide.value(getRegistrableName(LoggingService), logger);
         });
     });
 
     // prepare base services and classes.
-    beforeEach(inject(($injector: auto.IInjectorService) =>
-    {
+    beforeEach(inject(($injector: auto.IInjectorService) => {
         injector = InjectorService.factory($injector);
         rootScopeService = injector.get<IRootScopeService>(AngularServices.rootScope);
     }));
 
-    function getComponent(): MockComponent
-    {
+    function getComponent(): MockComponent {
         return new MockComponent(rootScopeService.$new(false, rootScopeService), injector);
     }
 
-    describe("structure", () =>
-    {
-        it("shuld have bindings", () =>
-        {
+    describe("structure", () => {
+        it("shuld have bindings", () => {
             expect(MockComponent).not.toBeNull();
             var parameters = MockComponent[registrableMetadataKey] as IComponent;
 
@@ -60,8 +51,7 @@ describe("MockComponent", () =>
             expect(parameters.bindings["parent"]).toBe("=");
         });
 
-        it("shuld have requirements", () =>
-        {
+        it("shuld have requirements", () => {
             expect(MockComponent).not.toBeNull();
             var parameters = MockComponent[registrableMetadataKey] as IComponent;
 
@@ -73,10 +63,8 @@ describe("MockComponent", () =>
         });
     });
 
-    describe("construction", () =>
-    {
-        it("shuld instantiate test Component", () =>
-        {
+    describe("construction", () => {
+        it("shuld instantiate test Component", () => {
             var component = getComponent();
             expect(component).not.toBeNull();
         });

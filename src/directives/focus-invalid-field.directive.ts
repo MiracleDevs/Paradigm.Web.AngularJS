@@ -10,25 +10,20 @@ import { IScope, IAugmentedJQuery, IAttributes, ITranscludeFunction, IController
 import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
 @Directive({
-    name: "focusInvalidField"
+    name: "focusInvalidField",
 })
-export class FocusInvalidField extends DirectiveBase
-{
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
-        instanceElement.on("submit", () =>
-        {
+export class FocusInvalidField extends DirectiveBase {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
+        instanceElement.on("submit", () => {
             var invalid = instanceElement.find(".ng-invalid");
 
-            if (!ObjectExtensions.isNull(invalid) && invalid.length > 0)
-            {
+            if (!ObjectExtensions.isNull(invalid) && invalid.length > 0) {
                 invalid[0].focus();
             }
         });
     }
 
-    static factory(): FocusInvalidField
-    {
+    static factory(): FocusInvalidField {
         return new FocusInvalidField();
     }
 }

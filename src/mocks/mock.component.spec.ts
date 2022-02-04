@@ -7,15 +7,14 @@
 import { ComponentBase } from "../components/base.component";
 import { Component, TextBinding, InputBinding, OutputBinding, TwoWayBinding, Require } from "../decorators/component";
 import { AngularServices } from "../services/angular.service";
-import { IScope, auto } from "angular";
+import { IScope } from "angular";
 import { InjectorService } from "../services/injector.service";
 
 @Component({
     template: "<span>{{name}}</span>",
-    dependencies: [AngularServices.scope, InjectorService ]
+    dependencies: [AngularServices.scope, InjectorService],
 })
-export class MockComponent extends ComponentBase
-{
+export class MockComponent extends ComponentBase {
     @TextBinding
     name: string;
 
@@ -34,8 +33,7 @@ export class MockComponent extends ComponentBase
     @Require("ngModel")
     secondRequire: MockComponent;
 
-    constructor(scope: IScope, injector: InjectorService)
-    {
+    constructor(scope: IScope, injector: InjectorService) {
         super(scope, injector);
     }
 }

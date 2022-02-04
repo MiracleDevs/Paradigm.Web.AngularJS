@@ -63,7 +63,7 @@ export { ServiceBase } from "./services/base.service";
 export { HttpServiceBase } from "./services/http-base.service";
 export { AlertService, Alert, AlertType } from "./services/alert.service";
 export { AsyncResourceService } from "./services/async-resource.service";
-export { DateService,  DateRange, MonthName, DayName, DateRangeValue } from "./services/date.service";
+export { DateService, DateRange, MonthName, DayName, DateRangeValue } from "./services/date.service";
 export { ExceptionService } from "./services/exception.service";
 export { FileManagementService } from "./services/file-management.service";
 export { GeolocationService, ICoordinates, IGeolocationInformation, IPositionOptions } from "./services/geolocation.service";

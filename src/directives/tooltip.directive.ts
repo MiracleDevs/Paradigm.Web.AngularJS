@@ -14,48 +14,42 @@ import { ObjectExtensions, StringExtensions } from "@miracledevs/paradigm-ui-web
     bindings: {
         tooltipOptions: "@",
         tooltipCose: "&",
-        tooltipParameter: "="
-    }
+        tooltipParameter: "=",
+    },
 })
-export class TooltipDirective extends DirectiveBase
-{
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+export class TooltipDirective extends DirectiveBase {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         const options = this.getOptions<ITooltipOptions>(instanceAttributes, "tooltipsterOptions");
 
-        if (ObjectExtensions.isNull(options) || ObjectExtensions.isNull(options.content))
-        {
+        if (ObjectExtensions.isNull(options) || ObjectExtensions.isNull(options.content)) {
             this.normalTooltip(instanceElement, scope, instanceAttributes);
         }
 
         (instanceElement as any).tooltipster(options);
     }
 
-    private normalTooltip(control: JQuery, scope: IScope, instanceAttributes: IAttributes): void
-    {
-        scope.$watch(() => instanceAttributes["title"], newValue =>
-        {
-            if (StringExtensions.isNullOrWhiteSpace(newValue))
-                return;
+    private normalTooltip(control: JQuery, scope: IScope, instanceAttributes: IAttributes): void {
+        scope.$watch(
+            () => instanceAttributes["title"],
+            newValue => {
+                if (StringExtensions.isNullOrWhiteSpace(newValue)) return;
 
-            var tooltipsterData = control.data("tooltipster-ns");
+                var tooltipsterData = control.data("tooltipster-ns");
 
-            if (!ObjectExtensions.isNull(tooltipsterData))
-            {
-                control.removeAttr("title");
-                (control as any).tooltipster("content", newValue);
+                if (!ObjectExtensions.isNull(tooltipsterData)) {
+                    control.removeAttr("title");
+                    (control as any).tooltipster("content", newValue);
+                }
             }
-        });
+        );
     }
 
-    static factory(): TooltipDirective
-    {
+    static factory(): TooltipDirective {
         return new TooltipDirective();
     }
 }
 
-export interface ITooltipOptions
-{
+export interface ITooltipOptions {
     animation: "fade" | "grow" | "swing" | "slide" | "fall";
     animationDuration: number | number[];
     arrow: boolean;

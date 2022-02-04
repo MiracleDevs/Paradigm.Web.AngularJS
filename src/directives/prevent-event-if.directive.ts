@@ -11,34 +11,27 @@ import { ITimeoutService, IScope, IAttributes, IController, ITranscludeFunction 
 
 @Directive({
     name: "preventEventIf",
-    bindings:
-    {
+    bindings: {
         preventEventIf: "&",
-        preventEvent: "@"
+        preventEvent: "@",
     },
-    dependencies: [AngularServices.timeout]
+    dependencies: [AngularServices.timeout],
 })
-export class PreventEventIfDirective extends DirectiveBase
-{
-    constructor(private timeout: ITimeoutService)
-    {
+export class PreventEventIfDirective extends DirectiveBase {
+    constructor(private timeout: ITimeoutService) {
         super();
     }
 
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
-        instanceElement.on(scope["preventEvent"], e =>
-        {
-            if (scope["preventEventIf"]())
-            {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
+        instanceElement.on(scope["preventEvent"], e => {
+            if (scope["preventEventIf"]()) {
                 event.preventDefault();
                 e.stopPropagation();
             }
         });
     }
 
-    static factory(timeout: ITimeoutService): PreventEventIfDirective
-    {
+    static factory(timeout: ITimeoutService): PreventEventIfDirective {
         return new PreventEventIfDirective(timeout);
     }
 }

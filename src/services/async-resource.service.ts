@@ -13,37 +13,30 @@ import * as angular from "angular";
 
 @Service({
     name: "$pd-asyncResourceService",
-    dependencies: [AngularServices.sce, AngularServices.q, AngularServices.document]
+    dependencies: [AngularServices.sce, AngularServices.q, AngularServices.document],
 })
-export class AsyncResourceService extends ServiceBase
-{
+export class AsyncResourceService extends ServiceBase {
     private readonly deferredRequests: Dictionary<string, IDeferred<void>>;
 
-    constructor(private sce: ISCEService, private q: IQService, private document: IDocumentService)
-    {
+    constructor(private sce: ISCEService, private q: IQService, private document: IDocumentService) {
         super();
         this.deferredRequests = new Dictionary<string, IDeferred<void>>();
     }
 
-    loadScript(url: string): IPromise<void>
-    {
+    loadScript(url: string): IPromise<void> {
         return this.loadResource("script", url);
     }
 
-    loadImage(url: string): IPromise<void>
-    {
+    loadImage(url: string): IPromise<void> {
         return this.loadResource("img", url);
     }
 
-    loadVieo(url: string): IPromise<void>
-    {
+    loadVieo(url: string): IPromise<void> {
         return this.loadResource("video", url);
     }
 
-    private loadResource(type: string, url: string): IPromise<void>
-    {
-        if (this.deferredRequests.containsKey(url))
-            return this.deferredRequests.get(url).promise;
+    private loadResource(type: string, url: string): IPromise<void> {
+        if (this.deferredRequests.containsKey(url)) return this.deferredRequests.get(url).promise;
 
         const defer = this.q.defer<void>();
         this.deferredRequests.add(url, defer);
@@ -59,8 +52,7 @@ export class AsyncResourceService extends ServiceBase
         return defer.promise;
     }
 
-    static factory(sce: ISCEService, q: IQService, document: IDocumentService): AsyncResourceService
-    {
+    static factory(sce: ISCEService, q: IQService, document: IDocumentService): AsyncResourceService {
         return new AsyncResourceService(sce, q, document);
     }
 }

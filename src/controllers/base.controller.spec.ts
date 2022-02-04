@@ -4,8 +4,8 @@
  * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
-import { ObjectExtensions, FunctionExtensions } from "@miracledevs/paradigm-ui-web-shared";
-import { ITestPromiseService, TestPromiseService, TestLoggingService } from "../mocks/mock.service.spec";
+import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
+import { TestPromiseService, TestLoggingService } from "../mocks/mock.service.spec";
 import { IRootScopeService, IControllerService, auto, mock } from "angular";
 import { FrameworkModule } from "../framework.module";
 import { AngularServices } from "../services/angular.service";
@@ -15,8 +15,7 @@ import { MockController } from "../mocks/mock.controller.spec";
 import { InjectorService } from "../services/injector.service";
 import { registrableMetadataKey, getRegistrableName } from "../decorators/registrable";
 
-describe("MockController", () =>
-{
+describe("MockController", () => {
     var injector: InjectorService;
     var rootScopeService: IRootScopeService;
     var controllerService: IControllerService;
@@ -24,14 +23,12 @@ describe("MockController", () =>
     var testService: TestPromiseService;
     var logger = new TestLoggingService();
 
-    beforeEach(() =>
-    {
+    beforeEach(() => {
         // create a new framework module with all the configuration.
         mock.module(FrameworkModule.instance.getModuleName());
 
         // inject a dummy logging service to prevent undesired logging.
-        mock.module($provide =>
-        {
+        mock.module($provide => {
             $provide.value(getRegistrableName(LoggingService), logger);
 
             var testPromiseService = TestPromiseService[registrableMetadataKey].dependencies.slice(0);
@@ -41,8 +38,7 @@ describe("MockController", () =>
     });
 
     // prepare base services and classes.
-    beforeEach(inject(($injector: auto.IInjectorService) =>
-    {
+    beforeEach(inject(($injector: auto.IInjectorService) => {
         injector = InjectorService.factory($injector);
         rootScopeService = injector.get<IRootScopeService>(AngularServices.rootScope);
         controllerService = injector.get<IControllerService>(AngularServices.controller);
@@ -50,15 +46,12 @@ describe("MockController", () =>
         testService = injector.get(TestPromiseService);
     }));
 
-    function getController(): MockController
-    {
+    function getController(): MockController {
         return controllerService(MockController, { scope: rootScopeService.$new(false, rootScopeService), injector: injector, testService: testService });
     }
 
-    describe("controller construction", () =>
-    {
-        it("shuld instantiate test controller", () =>
-        {
+    describe("controller construction", () => {
+        it("shuld instantiate test controller", () => {
             var controller = getController();
             expect(controller).not.toBeNull();
             expect(controller.numberResult).toBe(0);
@@ -72,9 +65,8 @@ describe("MockController", () =>
         });
     });
 
-    describe("base methods", () =>
-    {
-        it("should have base services", () =>{
+    describe("base methods", () => {
+        it("should have base services", () => {
             var controller = getController();
 
             expect(controller.getAlertService()).not.toBeNull();
@@ -88,21 +80,17 @@ describe("MockController", () =>
         /*it("should get services", () => expect(ObjectExtensions.getTypeName(getController().retrieveService<ITestPromiseService>("TestPromiseService"))).toBe("TestPromiseService"));*/
     });
 
-    describe("promise methods", () =>
-    {
-        it("should respond number promises", () =>
-        {
+    describe("promise methods", () => {
+        it("should respond number promises", () => {
             var controller = getController();
 
             controller.testNumbers();
             rootScopeService.$apply();
 
             expect(controller.numberResult).toBe(testService.numberResult);
-
         });
 
-        it("should respond boolean promises", () =>
-        {
+        it("should respond boolean promises", () => {
             var controller = getController();
 
             controller.testBooleans();
@@ -111,8 +99,7 @@ describe("MockController", () =>
             expect(controller.booleanResult).toBe(testService.booleanResult);
         });
 
-        it("should respond string promises", () =>
-        {
+        it("should respond string promises", () => {
             var controller = getController();
 
             controller.testStrings();
@@ -121,8 +108,7 @@ describe("MockController", () =>
             expect(controller.stringResult).toBe(testService.stringResult);
         });
 
-        it("should respond date promises", () =>
-        {
+        it("should respond date promises", () => {
             var controller = getController();
 
             controller.testDates();
@@ -131,8 +117,7 @@ describe("MockController", () =>
             expect(controller.dateResult).toBe(testService.dateResult);
         });
 
-        it("should respond object promises", () =>
-        {
+        it("should respond object promises", () => {
             var controller = getController();
 
             controller.testObjects();
@@ -141,8 +126,7 @@ describe("MockController", () =>
             expect(ObjectExtensions.isEqualTo(controller.objectResult, testService.objectResult)).toBe(true);
         });
 
-        it("should respond array promises", () =>
-        {
+        it("should respond array promises", () => {
             var controller = getController();
 
             controller.testArrays();
@@ -151,8 +135,7 @@ describe("MockController", () =>
             expect(ObjectExtensions.isEqualTo(controller.arrayResult, testService.arrayResult)).toBe(true);
         });
 
-        it("should reject promises", () =>
-        {
+        it("should reject promises", () => {
             var controller = getController();
 
             controller.testRejection();

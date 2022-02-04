@@ -4,37 +4,32 @@
  * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
-import { IScope, auto } from "angular";
+import { IScope } from "angular";
 import { ControllerBase } from "../base.controller";
 import { ModalInstance, ModalService } from "../../services/modal.service";
 import { InjectorService } from "../../services/injector.service";
 
-export abstract class DialogControllerBase extends ControllerBase
-{
+export abstract class DialogControllerBase extends ControllerBase {
     protected modalInstance: ModalInstance;
 
     protected modalService: ModalService;
 
-    protected constructor(scope: IScope, modalInstance: ModalInstance, injector: InjectorService)
-    {
+    protected constructor(scope: IScope, modalInstance: ModalInstance, injector: InjectorService) {
         super(scope, injector);
 
         this.modalInstance = modalInstance;
         this.modalService = this.getService(ModalService);
     }
 
-    isActiveDialog(): boolean
-    {
+    isActiveDialog(): boolean {
         return this.modalService.modals.last().key === this.modalInstance;
     }
 
-    cancel(): void
-    {
+    cancel(): void {
         this.modalInstance.close();
     }
 
-    protected close(result: any = null): void
-    {
+    protected close(result: any = null): void {
         this.modalInstance.resolve(result);
     }
 }

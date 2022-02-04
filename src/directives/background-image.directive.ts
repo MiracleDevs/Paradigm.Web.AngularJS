@@ -12,23 +12,21 @@ import { StringExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
 @Directive({
     name: "backgroundImage",
-    dependencies: [AngularServices.interpolate]
+    dependencies: [AngularServices.interpolate],
 })
-export class BackgroundImageDirective extends DirectiveBase
-{
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
-        scope.$watch(() => instanceAttributes["backgroundImage"], (newValue) =>
-        {
-            if (StringExtensions.isNullOrWhiteSpace(newValue))
-                return;
+export class BackgroundImageDirective extends DirectiveBase {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
+        scope.$watch(
+            () => instanceAttributes["backgroundImage"],
+            newValue => {
+                if (StringExtensions.isNullOrWhiteSpace(newValue)) return;
 
                 instanceElement.css("background-image", StringExtensions.format("url({0})", newValue));
-        });
+            }
+        );
     }
 
-    static factory(): BackgroundImageDirective
-    {
+    static factory(): BackgroundImageDirective {
         return new BackgroundImageDirective();
     }
 }

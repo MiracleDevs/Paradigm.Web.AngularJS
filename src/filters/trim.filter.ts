@@ -7,22 +7,17 @@
 import { Filter } from "../decorators/filter";
 import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
-@Filter({name: "pd-trim"})
-export class TrimFilter
-{
-    private static trim(value: string, maxChars: number): string
-    {
-        if (ObjectExtensions.isNull(value))
-            return null;
+@Filter({ name: "pd-trim" })
+export class TrimFilter {
+    private static trim(value: string, maxChars: number): string {
+        if (ObjectExtensions.isNull(value)) return null;
 
-        if (value.length < maxChars)
-            return value;
+        if (value.length < maxChars) return value;
 
         return value.substr(0, maxChars) + "...";
     }
 
-    static factory(): (value: string, maxChars: number) => string
-    {
+    static factory(): (value: string, maxChars: number) => string {
         return TrimFilter.trim;
     }
 }

@@ -12,18 +12,15 @@ import { AngularServices } from "../services/angular.service";
 
 @Directive({
     name: "dateTimePicker",
-    require:"ngModel",
-    dependencies: [AngularServices.filter]
+    require: "ngModel",
+    dependencies: [AngularServices.filter],
 })
-export class DateTimePickerDirective extends DirectiveBase
-{
-    constructor(private filter: IFilterService)
-    {
+export class DateTimePickerDirective extends DirectiveBase {
+    constructor(private filter: IFilterService) {
         super();
     }
 
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         var options = {} as IDateTimePickerParameters;
 
         //////////////////////////////////////////////////////////////////
@@ -55,41 +52,30 @@ export class DateTimePickerDirective extends DirectiveBase
         this.tryGetBoolean(options, instanceAttributes, "allowInputToggle");
         this.tryGetBoolean(options, instanceAttributes, "focusOnShow");
 
-        if (!ObjectExtensions.isNull(instanceAttributes["maxDateToday"]))
-            options.maxDate = new Date();
+        if (!ObjectExtensions.isNull(instanceAttributes["maxDateToday"])) options.maxDate = new Date();
 
         instanceElement["datetimepicker"](options);
 
-        instanceElement.on("dp.change", e =>
-        {
+        instanceElement.on("dp.change", e => {
             if (ObjectExtensions.isNull(options.format) || options.format === "L")
-                controller.$setViewValue(!ObjectExtensions.isNull(e["date"])
-                    ? this.filter("date")(e["date"]._d, "MM/dd/yyyy")
-                    : null);
+                controller.$setViewValue(!ObjectExtensions.isNull(e["date"]) ? this.filter("date")(e["date"]._d, "MM/dd/yyyy") : null);
 
-            if (!ObjectExtensions.isNull(options.format) && options.format === "LT")
-                controller.$setViewValue(!ObjectExtensions.isNull(e["date"])
-                    ? this.filter("date")(e["date"]._d, "hh:mm")
-                    : null);
+            if (!ObjectExtensions.isNull(options.format) && options.format === "LT") controller.$setViewValue(!ObjectExtensions.isNull(e["date"]) ? this.filter("date")(e["date"]._d, "hh:mm") : null);
         });
 
-        instanceElement.on("dp.show", () =>
-        {
-            if (!ObjectExtensions.isNull(options.viewMode))
-            {
+        instanceElement.on("dp.show", () => {
+            if (!ObjectExtensions.isNull(options.viewMode)) {
                 instanceElement.data("DateTimePicker").viewMode(options.viewMode);
             }
         });
     }
 
-    static factory(filter: IFilterService): DateTimePickerDirective
-    {
+    static factory(filter: IFilterService): DateTimePickerDirective {
         return new DateTimePickerDirective(filter);
     }
 }
 
-interface IDateTimePickerIcons
-{
+interface IDateTimePickerIcons {
     time?: string;
     date?: string;
     up?: string;
@@ -101,14 +87,12 @@ interface IDateTimePickerIcons
     close?: string;
 }
 
-interface IDateTimePickerPositioning
-{
+interface IDateTimePickerPositioning {
     horizontal?: string;
     vertical?: string;
 }
 
-interface IDateTimePickerParameters
-{
+interface IDateTimePickerParameters {
     format?: string;
     dayViewHeaderFormat?: string;
     extraFormats?: boolean;

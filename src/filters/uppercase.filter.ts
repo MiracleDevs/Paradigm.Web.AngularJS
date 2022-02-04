@@ -7,11 +7,9 @@
 import { Filter } from "../decorators/filter";
 import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
-@Filter({name: "pd-uppercase"})
-export class UppercaseFilter
-{
-    static factory(): (value: string) => string
-    {
-        return value => ObjectExtensions.isNull(value) ? null : value.toUpperCase();
+@Filter({ name: "pd-uppercase" })
+export class UppercaseFilter {
+    static factory(): (value: string) => string {
+        return value => (ObjectExtensions.isNull(value) ? null : value.toUpperCase());
     }
 }

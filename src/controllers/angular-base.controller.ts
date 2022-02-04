@@ -6,59 +6,46 @@
 
 import { IScope, IController as AngularController, IOnChangesObject } from "angular";
 
-export abstract class AngularControllerBase implements AngularController
-{
-    protected constructor(protected scope: IScope)
-    {
-    }
+export abstract class AngularControllerBase implements AngularController {
+    protected constructor(protected scope: IScope) {}
 
-    $onInit(): void
-    {
+    $onInit(): void {
         this.onInit();
     }
 
-    $doCheck(): void
-    {
+    $doCheck(): void {
         this.doCheck();
     }
 
-    $onChanges(onChangesObj: IOnChangesObject): void
-    {
+    $onChanges(onChangesObj: IOnChangesObject): void {
         this.onChanges(onChangesObj);
     }
 
-    $onDestroy(): void
-    {
+    $onDestroy(): void {
         this.onDestroy();
     }
 
-    $postLink(): void
-    {
+    $postLink(): void {
         this.postLink();
     }
 
-    protected onInit(): void
-    {
+    protected onInit(): void {
         // override this method.
     }
 
-    protected doCheck(): void
-    {
+    protected doCheck(): void {
         // override this method.
     }
 
-    protected onChanges(onChangesObj: IOnChangesObject): void
-    {
+    protected onChanges(onChangesObj: IOnChangesObject): void {
         // override this method.
     }
 
-    protected onDestroy(): void
-    {
+    protected onDestroy(): void {
         // override this method.
     }
 
-    protected postLink(): void
-    {
+    protected postLink(): void {
         // override this method.
     }
 }

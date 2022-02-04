@@ -7,118 +7,85 @@
 import { IRegistrable, registrableMetadataKey } from "./registrable";
 import { ObjectExtensions, FunctionExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
-function addBinding(binding: string, target: Object, propertyKey: string | symbol): void
-{
-    if (ObjectExtensions.isNull(target) ||
-        ObjectExtensions.isNull(target.constructor) ||
-        ObjectExtensions.isNull(propertyKey))
-        throw new Error("Missing target or propery.");
+function addBinding(binding: string, target: Object, propertyKey: string | symbol): void {
+    if (ObjectExtensions.isNull(target) || ObjectExtensions.isNull(target.constructor) || ObjectExtensions.isNull(propertyKey)) throw new Error("Missing target or propery.");
 
     var constructor = target.constructor;
     var parameters = constructor[registrableMetadataKey] as IComponent;
 
-    if (ObjectExtensions.isNull(parameters))
-        parameters = constructor[registrableMetadataKey] = {};
+    if (ObjectExtensions.isNull(parameters)) parameters = constructor[registrableMetadataKey] = {};
 
-    if (ObjectExtensions.isNull(parameters.bindings))
-        parameters.bindings = {};
+    if (ObjectExtensions.isNull(parameters.bindings)) parameters.bindings = {};
 
     (parameters.bindings as any)[propertyKey] = binding;
 }
 
-export function Component(parameters: IComponent): <T>(constructor: { new(...args: any[]): T }) => void
-{
-    if (ObjectExtensions.isNull(parameters))
-        throw new Error("Can not register a component without an instance of IComponent.");
+export function Component(parameters: IComponent): <T>(constructor: { new (...args: any[]): T }) => void {
+    if (ObjectExtensions.isNull(parameters)) throw new Error("Can not register a component without an instance of IComponent.");
 
-    return <T>(constructor: { new(...args: any[]): T }): void =>
-    {
-        if (ObjectExtensions.isNull(constructor))
-            throw new Error("Missing component constructor.");
+    return <T>(constructor: { new (...args: any[]): T }): void => {
+        if (ObjectExtensions.isNull(constructor)) throw new Error("Missing component constructor.");
 
-        if (!ObjectExtensions.isNull(constructor[registrableMetadataKey]))
-        {
+        if (!ObjectExtensions.isNull(constructor[registrableMetadataKey])) {
             var params = constructor[registrableMetadataKey] as IComponent;
 
-            if (!ObjectExtensions.isNull(params.bindings))
-                parameters.bindings = params.bindings;
+            if (!ObjectExtensions.isNull(params.bindings)) parameters.bindings = params.bindings;
 
-            if (!ObjectExtensions.isNull(params.require))
-                parameters.require = params.require;
+            if (!ObjectExtensions.isNull(params.require)) parameters.require = params.require;
         }
 
-        if (ObjectExtensions.isNull(parameters.name))
-            parameters.name = FunctionExtensions.getFunctionName(constructor);
+        if (ObjectExtensions.isNull(parameters.name)) parameters.name = FunctionExtensions.getFunctionName(constructor);
 
-        if (ObjectExtensions.isNull(parameters.controllerAs))
-            parameters.controllerAs = "controller";
+        if (ObjectExtensions.isNull(parameters.controllerAs)) parameters.controllerAs = "controller";
 
-        if (ObjectExtensions.isNull(parameters.controller))
-            parameters.controller = constructor;
+        if (ObjectExtensions.isNull(parameters.controller)) parameters.controller = constructor;
 
-        if (ObjectExtensions.isNull(parameters.controller))
-            throw new Error("Missing component constructor.");
+        if (ObjectExtensions.isNull(parameters.controller)) throw new Error("Missing component constructor.");
 
         constructor[registrableMetadataKey] = parameters;
 
-        if (!ObjectExtensions.isNull(parameters.module))
-        {
+        if (!ObjectExtensions.isNull(parameters.module)) {
             parameters.module.registerComponent(constructor);
         }
     };
 }
 
-export function InputBinding(target: Object, propertyKey: string | symbol): void
-{
+export function InputBinding(target: Object, propertyKey: string | symbol): void {
     addBinding("<", target, propertyKey);
 }
 
-export function OutputBinding(target: Object, propertyKey: string | symbol): void
-{
+export function OutputBinding(target: Object, propertyKey: string | symbol): void {
     addBinding("&", target, propertyKey);
 }
 
-export function TextBinding(target: Object, propertyKey: string | symbol): void
-{
+export function TextBinding(target: Object, propertyKey: string | symbol): void {
     addBinding("@", target, propertyKey);
 }
 
-export function TwoWayBinding(target: Object, propertyKey: string | symbol): void
-{
+export function TwoWayBinding(target: Object, propertyKey: string | symbol): void {
     addBinding("=", target, propertyKey);
 }
 
-export function Require(controller: string | Function, searchOnParents: boolean = false): Function
-{
-    return (target: Object, propertyKey: string | symbol) =>
-    {
-        if (ObjectExtensions.isNull(target) ||
-            ObjectExtensions.isNull(target.constructor) ||
-            ObjectExtensions.isNull(propertyKey))
-            throw new Error("Missing target or propery.");
+export function Require(controller: string | Function, searchOnParents: boolean = false): Function {
+    return (target: Object, propertyKey: string | symbol) => {
+        if (ObjectExtensions.isNull(target) || ObjectExtensions.isNull(target.constructor) || ObjectExtensions.isNull(propertyKey)) throw new Error("Missing target or propery.");
 
         var constructor = target.constructor;
         var parameters = constructor[registrableMetadataKey] as IComponent;
 
-        if (ObjectExtensions.isNull(parameters))
-            parameters = constructor[registrableMetadataKey] = {};
+        if (ObjectExtensions.isNull(parameters)) parameters = constructor[registrableMetadataKey] = {};
 
-        if (ObjectExtensions.isNull(parameters.require))
-            parameters.require = {};
+        if (ObjectExtensions.isNull(parameters.require)) parameters.require = {};
 
-        var controllerName = (ObjectExtensions.getTypeName(controller) === "Function")
-            ? FunctionExtensions.getFunctionName(controller as Function)
-            : controller as string;
+        var controllerName = ObjectExtensions.getTypeName(controller) === "Function" ? FunctionExtensions.getFunctionName(controller as Function) : (controller as string);
 
-        if (searchOnParents)
-            controllerName = "^" + controllerName;
+        if (searchOnParents) controllerName = "^" + controllerName;
 
         (parameters.require as any)[propertyKey] = controllerName;
     };
 }
 
-export interface IComponent extends IRegistrable
-{
+export interface IComponent extends IRegistrable {
     controller?: Function;
 
     controllerAs?: string;

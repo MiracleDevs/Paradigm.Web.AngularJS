@@ -1,50 +1,19 @@
 {
     "rules": {
-        "ban": [
-            true,
-            [
-                "_",
-                "extend"
-            ],
-            [
-                "_",
-                "isNull"
-            ],
-            [
-                "_",
-                "isDefined"
-            ]
-        ],
+        "ban": [true, ["_", "extend"], ["_", "isNull"], ["_", "isDefined"]],
         "class-name": true,
-        "comment-format": [
-            true,
-            "check-space"
-        ],
+        "comment-format": [true, "check-space"],
         "curly": false,
         "eofline": false,
         "forin": true,
-        "indent": [
-            true,
-            "spaces",
-            4
-        ],
+        "indent": [true, "spaces", 4],
         "interface-name": true,
         "jsdoc-format": true,
         "label-position": true,
-        "max-line-length": [
-            true,
-            540
-        ],
+        "max-line-length": [true, 540],
         "no-arg": true,
         "no-bitwise": false,
-        "no-console": [
-            true,
-            "debug",
-            "info",
-            "time",
-            "timeEnd",
-            "trace"
-        ],
+        "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
         "no-construct": true,
         "no-debugger": true,
         "no-duplicate-variable": true,
@@ -55,32 +24,12 @@
         "no-unused-expression": true,
         "no-unused-variable": true,
         "no-use-before-declare": true,
-        "one-line": [
-            false,
-            "check-open-brace",
-            "check-catch",
-            "check-else",
-            "check-whitespace"
-        ],
-        "quotemark": [
-            true,
-            "double"
-        ],
+        "one-line": [false, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
+        "quotemark": [true, "double"],
         "radix": true,
-        "semicolon": [
-            true,
-            "always"
-        ],
-        "triple-equals": [
-            true,
-            "allow-null-check"
-        ],
-        "typedef": [
-            true,
-            "call-signature",
-            "parameter",
-            "property-declaration"
-        ],
+        "semicolon": [true, "always"],
+        "triple-equals": [true, "allow-null-check"],
+        "typedef": [true, "call-signature", "parameter", "property-declaration"],
         "typedef-whitespace": [
             true,
             {
@@ -91,13 +40,6 @@
             }
         ],
         "variable-name": false,
-        "whitespace": [
-            false,
-            "check-branch",
-            "check-decl",
-            "check-operator",
-            "check-separator",
-            "check-type"
-        ]
+        "whitespace": [false, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"]
     }
 }

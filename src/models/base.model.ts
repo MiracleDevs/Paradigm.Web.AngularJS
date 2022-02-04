@@ -6,27 +6,22 @@
 
 import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
-export class ModelBase
-{
+export class ModelBase {
     private original: ModelBase;
 
-    startTracking(): void
-    {
+    startTracking(): void {
         this.original = ObjectExtensions.clone(this, ["original"]);
     }
 
-    stopTracking(): void
-    {
+    stopTracking(): void {
         this.original = null;
     }
 
-    isDirty(): boolean
-    {
+    isDirty(): boolean {
         return !ObjectExtensions.isEqualTo(this, this.original, ["original"]);
     }
 
-    isTracking(): boolean
-    {
+    isTracking(): boolean {
         return this.original != null;
     }
 }

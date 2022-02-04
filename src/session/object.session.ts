@@ -6,25 +6,20 @@
 
 import { ObjectExtensions, LocalStorage } from "@miracledevs/paradigm-ui-web-shared";
 
-export class ObjectSession
-{
-    static save<T>(name: string, data: T): void
-    {
+export class ObjectSession {
+    static save<T>(name: string, data: T): void {
         LocalStorage.set<String>(name, JSON.stringify(data));
     }
 
-    static restore<T>(name: string): T
-    {
+    static restore<T>(name: string): T {
         const content = LocalStorage.get<String>(String, name);
 
-        if (ObjectExtensions.isNull(content))
-            return null;
+        if (ObjectExtensions.isNull(content)) return null;
 
         return JSON.parse(content.valueOf()) as T;
     }
 
-    static clear(name: string): void
-    {
+    static clear(name: string): void {
         LocalStorage.remove(name);
     }
 }

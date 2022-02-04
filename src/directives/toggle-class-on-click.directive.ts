@@ -7,23 +7,20 @@
 import { Directive } from "../decorators/directive";
 import { DirectiveBase } from "./base.directive";
 import { IScope, IAttributes, ITranscludeFunction, IController } from "angular";
-import  * as $ from "jquery";
+import * as $ from "jquery";
 
 @Directive({
     name: "toggleClassOnClick",
 })
-export class ToggleClassOnClickDirective extends DirectiveBase
-{
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+export class ToggleClassOnClickDirective extends DirectiveBase {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         var toggleElement = $(instanceAttributes["toggleElement"] || instanceElement);
         var toggleClass = instanceAttributes["toggleClass"];
 
         instanceElement.on("click touch", () => $(toggleElement).toggleClass(toggleClass));
     }
 
-    static factory(): ToggleClassOnClickDirective
-    {
+    static factory(): ToggleClassOnClickDirective {
         return new ToggleClassOnClickDirective();
     }
 }

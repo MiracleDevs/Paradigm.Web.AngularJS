@@ -5,10 +5,6 @@
  */
 
 import { ModuleBase } from "./base.module";
-
-import { IScope, IHttpProvider, ILocationProvider, auto } from "angular";
-import { StateProvider, UrlRouterProvider, StateService } from "@uirouter/angularjs";
-
 import { AddClassDirective } from "./directives/add-class.directive";
 import { AlertDirective } from "./directives/alert.directive";
 import { BackgroundImageDirective } from "./directives/background-image.directive";
@@ -46,29 +42,26 @@ import { LoggingService } from "./services/logging.service";
 import { UrlService } from "./services/url.service";
 import { InjectorService } from "./services/injector.service";
 
-export class FrameworkModule extends ModuleBase
-{
+export class FrameworkModule extends ModuleBase {
     private static internalInstance = new FrameworkModule();
 
-    static get instance(): FrameworkModule { return FrameworkModule.internalInstance; }
+    static get instance(): FrameworkModule {
+        return FrameworkModule.internalInstance;
+    }
 
-    constructor()
-    {
-        if (FrameworkModule.internalInstance != null)
-            throw new Error("The program does not allow more than one instance of the ModuleBase.");
+    constructor() {
+        if (FrameworkModule.internalInstance != null) throw new Error("The program does not allow more than one instance of the ModuleBase.");
 
         super();
         FrameworkModule.internalInstance = this;
         this.logger.debug("creating application");
     }
 
-    getModuleName(): string
-    {
+    getModuleName(): string {
         return "miracledevs-framework";
     }
 
-    protected register(): void
-    {
+    protected register(): void {
         this.registerLoggingService(LoggingService);
 
         this.registerServices([
@@ -83,7 +76,7 @@ export class FrameworkModule extends ModuleBase
             LoggingService,
             MessageBus,
             ModalService,
-            UrlService
+            UrlService,
         ]);
 
         this.registerDirectives([
@@ -110,12 +103,11 @@ export class FrameworkModule extends ModuleBase
             SelectToggleClassDirective,
             ToggleClassDirective,
             ToggleClassOnClickDirective,
-            TooltipDirective
-            ]);
+            TooltipDirective,
+        ]);
     }
 
-    protected getModuleDependencies(): string[]
-    {
+    protected getModuleDependencies(): string[] {
         return ["ui.router", "ngAnimate", "pascalprecht.translate"];
     }
 }

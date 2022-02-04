@@ -12,27 +12,20 @@ import { Service } from "../decorators/service";
 import { getRegistrableName } from "../decorators/registrable";
 
 @Service({ name: "$pd-injectorService", dependencies: [AngularServices.injector] })
-export class InjectorService extends ServiceBase
-{
-    constructor(private injector: auto.IInjectorService)
-    {
+export class InjectorService extends ServiceBase {
+    constructor(private injector: auto.IInjectorService) {
         super();
     }
 
-    get<T>(service: string | { new(...args: any[]): T }): T
-    {
-        if (ObjectExtensions.isNull(service))
-            return null;
+    get<T>(service: string | { new (...args: any[]): T }): T {
+        if (ObjectExtensions.isNull(service)) return null;
 
-        if (ObjectExtensions.getTypeName(service) === "String")
-            return this.injector.get<T>(service as string);
+        if (ObjectExtensions.getTypeName(service) === "String") return this.injector.get<T>(service as string);
 
-        return this.injector.get<T>(getRegistrableName((service as Function)) ||
-                                    FunctionExtensions.getFunctionName(service as Function));
+        return this.injector.get<T>(getRegistrableName(service as Function) || FunctionExtensions.getFunctionName(service as Function));
     }
 
-    static factory(injector: auto.IInjectorService): InjectorService
-    {
+    static factory(injector: auto.IInjectorService): InjectorService {
         return new InjectorService(injector);
     }
 }

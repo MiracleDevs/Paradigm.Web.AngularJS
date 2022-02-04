@@ -9,28 +9,22 @@ import { ServiceBase } from "./base.service";
 import { ObjectExtensions, StringExtensions, DateExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
 @Service({ name: "$pd-dateService" })
-export class DateService extends ServiceBase
-{
-    getDate(value: Date | string): Date
-    {
-        if (value instanceof Date)
-            return value as Date;
+export class DateService extends ServiceBase {
+    getDate(value: Date | string): Date {
+        if (value instanceof Date) return value as Date;
 
         let date = new Date();
 
-        if (StringExtensions.isString(value))
-            date = new Date(value as string);
+        if (StringExtensions.isString(value)) date = new Date(value as string);
 
-        if (ObjectExtensions.isNull(date) || isNaN(date.getTime()))
-        {
+        if (ObjectExtensions.isNull(date) || isNaN(date.getTime())) {
             date = DateExtensions.fromIso8601(value as string);
         }
 
         return date;
     }
 
-    getDateRangeValue(value: Date | string): DateRangeValue
-    {
+    getDateRangeValue(value: Date | string): DateRangeValue {
         var oneSecond = 1000;
         var oneMinute = oneSecond * 60;
         var oneHour = oneMinute * 60;
@@ -53,8 +47,7 @@ export class DateService extends ServiceBase
         var oneMonthAgo = new Date(nowYears, nowMonths - 1, nowDays, nowHours, nowMinutes, nowSeconds, nowMiliseconds);
         var oneYearAgo = new Date(nowYears - 1, nowMonths, nowDays, nowHours, nowMinutes, nowSeconds, nowMiliseconds);
 
-        if (ObjectExtensions.isNull(value))
-            return new DateRangeValue(0, DateRange.Unknown);
+        if (ObjectExtensions.isNull(value)) return new DateRangeValue(0, DateRange.Unknown);
 
         var date = this.getDate(value);
 
@@ -65,32 +58,23 @@ export class DateService extends ServiceBase
         var rangeMonths = this.getMonthDifference(date, now);
         var rangeYears = Math.floor(rangeMonths / oneYear);
 
-        if (date > oneMinuteAgo)
-        {
+        if (date > oneMinuteAgo) {
             return new DateRangeValue(rangeSeconds, DateRange.Seconds);
-        }
-        else if (date > oneHourAgo && date <= oneMinuteAgo)
-        {
+        } else if (date > oneHourAgo && date <= oneMinuteAgo) {
             return new DateRangeValue(rangeMinutes, DateRange.Minutes);
         }
-        if (date > oneDayAgo && date <= oneHourAgo)
-        {
+        if (date > oneDayAgo && date <= oneHourAgo) {
             return new DateRangeValue(rangeHours, DateRange.Hours);
-        }
-        else if (date > oneMonthAgo && date <= oneDayAgo)
-        {
+        } else if (date > oneMonthAgo && date <= oneDayAgo) {
             return new DateRangeValue(rangeDays, DateRange.Days);
-        }
-        else if (date > oneYearAgo && date <= oneMonthAgo)
-        {
+        } else if (date > oneYearAgo && date <= oneMonthAgo) {
             return new DateRangeValue(rangeMonths, DateRange.Months);
         }
 
         return new DateRangeValue(rangeYears, DateRange.Years);
     }
 
-    private getMonthDifference(d1: Date, d2: Date): number
-    {
+    private getMonthDifference(d1: Date, d2: Date): number {
         let months: number;
         months = (d2.getFullYear() - d1.getFullYear()) * 12;
         months -= d1.getMonth();
@@ -98,25 +82,22 @@ export class DateService extends ServiceBase
         return months <= 0 ? 0 : months;
     }
 
-    static factory(): DateService
-    {
+    static factory(): DateService {
         return new DateService();
     }
 }
 
-export enum DateRange
-{
+export enum DateRange {
     Unknown = 0,
     Seconds = 1,
     Minutes = 2,
     Hours = 3,
     Days = 4,
     Months = 5,
-    Years = 6
+    Years = 6,
 }
 
-export enum MonthName
-{
+export enum MonthName {
     "January" = 0,
     "February" = 1,
     "March" = 2,
@@ -128,23 +109,19 @@ export enum MonthName
     "September" = 8,
     "October" = 9,
     "November" = 10,
-    "December" = 11
+    "December" = 11,
 }
 
-export enum DayName
-{
+export enum DayName {
     "Sunday" = 0,
     "Monday" = 1,
     "Tuesday" = 2,
     "Wednesday" = 3,
     "Thursday" = 4,
     "Friday" = 5,
-    "Saturday" = 6
+    "Saturday" = 6,
 }
 
-export class DateRangeValue
-{
-    constructor(public value: number, public range: DateRange)
-    {
-    }
+export class DateRangeValue {
+    constructor(public value: number, public range: DateRange) {}
 }

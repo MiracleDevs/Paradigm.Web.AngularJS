@@ -4,8 +4,7 @@
  * Licensed under MIT (https://github.com/MiracleDevs/Paradigm.Web.Shared/blob/master/LICENSE)
  */
 
-export class AngularServices
-{
+export class AngularServices {
     static readonly translateProvider = "$translateProvider";
     static readonly translate = "$translate";
     static readonly anchorScrollProvider = "$anchorScrollProvider";

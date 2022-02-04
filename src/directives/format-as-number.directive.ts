@@ -11,34 +11,27 @@ import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
 @Directive({
     name: "formatAsNumber",
-    require: "?ngModel"
+    require: "?ngModel",
 })
-export class FormatAsNumberDirective extends DirectiveBase
-{
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
-        if (!ObjectExtensions.isNull(controller))
-        {
-            controller.$formatters.unshift(value =>
-            {
-                return (ObjectExtensions.isNull(value) || value === "") ? null : Number(value).toFixed(instanceAttributes["decimalPlaces"] || 2);
+export class FormatAsNumberDirective extends DirectiveBase {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
+        if (!ObjectExtensions.isNull(controller)) {
+            controller.$formatters.unshift(value => {
+                return ObjectExtensions.isNull(value) || value === "" ? null : Number(value).toFixed(instanceAttributes["decimalPlaces"] || 2);
             });
 
-            controller.$parsers.unshift(value =>
-            {
-                return (ObjectExtensions.isNull(value) || value === "") ? null : Number(value).valueOf();
+            controller.$parsers.unshift(value => {
+                return ObjectExtensions.isNull(value) || value === "" ? null : Number(value).valueOf();
             });
 
-            instanceElement.blur(() =>
-            {
+            instanceElement.blur(() => {
                 var value = instanceElement.val();
-                return instanceElement.val((ObjectExtensions.isNull(value) || value === "") ? null : Number(instanceElement.val()).toFixed(instanceAttributes["decimalPlaces"] || 2));
+                return instanceElement.val(ObjectExtensions.isNull(value) || value === "" ? null : Number(instanceElement.val()).toFixed(instanceAttributes["decimalPlaces"] || 2));
             });
         }
     }
 
-    static factory(): FormatAsNumberDirective
-    {
+    static factory(): FormatAsNumberDirective {
         return new FormatAsNumberDirective();
     }
 }

@@ -6,12 +6,9 @@
 
 import { ObjectExtensions, FunctionExtensions } from "@miracledevs/paradigm-ui-web-shared";
 
-export function Message(name: string): <T>(constructor: { new(...args: any[]): T }) => void
-{
-    return <T>(constructor: { new(...args: any[]): T }): void =>
-    {
-        if (ObjectExtensions.isNull(constructor))
-            throw new Error("Missing message constructor.");
+export function Message(name: string): <T>(constructor: { new (...args: any[]): T }) => void {
+    return <T>(constructor: { new (...args: any[]): T }): void => {
+        if (ObjectExtensions.isNull(constructor)) throw new Error("Missing message constructor.");
 
         constructor[messageTypeKey] = name || FunctionExtensions.getFunctionName(constructor);
     };

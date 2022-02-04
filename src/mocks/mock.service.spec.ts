@@ -10,12 +10,10 @@ import { IPromise, IQService, ITimeoutService } from "angular";
 import { Service } from "../decorators/service";
 import { LoggingService, LogType } from "../services/logging.service";
 
-export class TestLoggingService extends LoggingService
-{
+export class TestLoggingService extends LoggingService {
     private logWritten: number[];
 
-    constructor()
-    {
+    constructor() {
         super();
         this.logWritten = [];
         this.logWritten[LogType.Trace] = 0;
@@ -26,8 +24,7 @@ export class TestLoggingService extends LoggingService
         this.logWritten[LogType.Critical] = 0;
     }
 
-    log(message: string, type: LogType = LogType.Trace, tag: string = null): void
-    {
+    log(message: string, type: LogType = LogType.Trace, tag: string = null): void {
         // comment this line to disable test logs.
         // super.log(message, type, tag);
         this.logWritten[type]++;
@@ -38,8 +35,7 @@ export class TestLoggingService extends LoggingService
     }
 }
 
-export interface ITestPromiseService
-{
+export interface ITestPromiseService {
     numberPromise(): IPromise<number>;
 
     booleanPromise(): IPromise<boolean>;
@@ -58,10 +54,9 @@ export interface ITestPromiseService
 @Service({
     name: "TestPromiseService",
     factory: TestPromiseService.factory,
-    dependencies: [AngularServices.q, AngularServices.timeout]
+    dependencies: [AngularServices.q, AngularServices.timeout],
 })
-export class TestPromiseService extends ServiceBase implements ITestPromiseService
-{
+export class TestPromiseService extends ServiceBase implements ITestPromiseService {
     private readonly q: IQService;
 
     private readonly timeout: ITimeoutService;
@@ -82,8 +77,7 @@ export class TestPromiseService extends ServiceBase implements ITestPromiseServi
 
     readonly rejectionReason: string;
 
-    constructor(q: ng.IQService, timeout: ITimeoutService)
-    {
+    constructor(q: ng.IQService, timeout: ITimeoutService) {
         super();
         this.q = q;
         this.timeout = timeout;
@@ -98,43 +92,35 @@ export class TestPromiseService extends ServiceBase implements ITestPromiseServi
         this.rejectionReason = "Testing promise rejection";
     }
 
-    numberPromise(): ng.IPromise<number>
-    {
+    numberPromise(): ng.IPromise<number> {
         return this.q.resolve(this.numberResult);
     }
 
-    booleanPromise(): ng.IPromise<boolean>
-    {
+    booleanPromise(): ng.IPromise<boolean> {
         return this.q.resolve(this.booleanResult);
     }
 
-    stringPromise(): ng.IPromise<string>
-    {
+    stringPromise(): ng.IPromise<string> {
         return this.q.resolve(this.stringResult);
     }
 
-    datePromise(): ng.IPromise<Date>
-    {
+    datePromise(): ng.IPromise<Date> {
         return this.q.resolve(this.dateResult);
     }
 
-    objectPromise(): ng.IPromise<Object>
-    {
+    objectPromise(): ng.IPromise<Object> {
         return this.q.resolve(this.objectResult);
     }
 
-    arrayPromise(): ng.IPromise<number[]>
-    {
+    arrayPromise(): ng.IPromise<number[]> {
         return this.q.resolve(this.arrayResult);
     }
 
-    rejectPromise(): ng.IPromise<number>
-    {
+    rejectPromise(): ng.IPromise<number> {
         return this.q.reject(this.rejectionReason);
     }
 
-    static factory(q: IQService, timeout: ITimeoutService): ITestPromiseService
-    {
+    static factory(q: IQService, timeout: ITimeoutService): ITestPromiseService {
         return new TestPromiseService(q, timeout);
     }
 }

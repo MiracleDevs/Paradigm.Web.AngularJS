@@ -9,17 +9,14 @@ import { DirectiveBase } from "./base.directive";
 import { IScope, IAttributes, IController, ITranscludeFunction } from "angular";
 
 @Directive({
-    name: "fullSelect"
+    name: "fullSelect",
 })
-export class FullSelectDirective extends DirectiveBase
-{
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+export class FullSelectDirective extends DirectiveBase {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         instanceElement.on("focus", () => (instanceElement as any).select());
     }
 
-    static factory(): FullSelectDirective
-    {
+    static factory(): FullSelectDirective {
         return new FullSelectDirective();
     }
 }

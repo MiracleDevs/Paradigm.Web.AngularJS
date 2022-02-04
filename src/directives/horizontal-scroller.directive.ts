@@ -9,21 +9,18 @@ import { Directive } from "../decorators/directive";
 import { AngularServices } from "../services/angular.service";
 import { IInterpolateService, IScope, IAttributes, IController, ITranscludeFunction } from "angular";
 import { StringExtensions, ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
-import  * as $ from "jquery";
+import * as $ from "jquery";
 
 @Directive({
     name: "horizontalScroller",
-    dependencies: [AngularServices.interpolate]
+    dependencies: [AngularServices.interpolate],
 })
-export class HorizontalScrollerDirective extends DirectiveBase
-{
-    constructor(private interpolate: IInterpolateService)
-    {
+export class HorizontalScrollerDirective extends DirectiveBase {
+    constructor(private interpolate: IInterpolateService) {
         super();
     }
 
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         const options = {} as IHorizontalScrollerParameters;
 
         options.element = instanceElement;
@@ -36,30 +33,32 @@ export class HorizontalScrollerDirective extends DirectiveBase
         this.tryGetNumber(options, instanceAttributes, "fps");
         this.tryGetNumber(options, instanceAttributes, "minVelocity");
 
-        if (StringExtensions.isNullOrWhiteSpace(options.container) ||
+        if (
+            StringExtensions.isNullOrWhiteSpace(options.container) ||
             StringExtensions.isNullOrWhiteSpace(options.content) ||
             StringExtensions.isNullOrWhiteSpace(options.leftArrow) ||
-            StringExtensions.isNullOrWhiteSpace(options.rightArrow))
+            StringExtensions.isNullOrWhiteSpace(options.rightArrow)
+        )
             return;
 
         instanceElement[0]["scrollerInstance"] = new HorizontalScrollerInstance(options);
-        scope.$watch(() => instanceElement[0].innerHTML, () => instanceElement[0]["scrollerInstance"].enableScroll());
+        scope.$watch(
+            () => instanceElement[0].innerHTML,
+            () => instanceElement[0]["scrollerInstance"].enableScroll()
+        );
     }
 
-    protected onDestroy(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+    protected onDestroy(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         instanceElement[0]["scrollerInstance"].dispose();
         super.onDestroy(scope, instanceElement, instanceAttributes, controller, transclude);
     }
 
-    static factory(interpolate: IInterpolateService): HorizontalScrollerDirective
-    {
+    static factory(interpolate: IInterpolateService): HorizontalScrollerDirective {
         return new HorizontalScrollerDirective(interpolate);
     }
 }
 
-export interface IHorizontalScrollerParameters
-{
+export interface IHorizontalScrollerParameters {
     element: JQuery;
 
     container: string;
@@ -79,8 +78,7 @@ export interface IHorizontalScrollerParameters
     fps: number;
 }
 
-export class HorizontalScrollerInstance
-{
+export class HorizontalScrollerInstance {
     element: JQuery;
 
     container: JQuery;
@@ -111,8 +109,7 @@ export class HorizontalScrollerInstance
 
     lastTime: number;
 
-    constructor(options: IHorizontalScrollerParameters)
-    {
+    constructor(options: IHorizontalScrollerParameters) {
         this.element = $(options.element);
         this.container = this.element.find(options.container);
         this.content = this.element.find(options.content);
@@ -130,26 +127,21 @@ export class HorizontalScrollerInstance
         $(window).on("resize", () => this.enableScroll());
 
         this.leftArrow.on("mousedown touchstart", () => this.moveLeft());
-        this.leftArrow.on("mouseup mouseleave touchend touchcancel", () => this.pressing = false);
+        this.leftArrow.on("mouseup mouseleave touchend touchcancel", () => (this.pressing = false));
 
         this.rightArrow.on("mousedown touchstart", () => this.moveRight());
-        this.rightArrow.on("mouseup mouseleave touchend touchcancel", () => this.pressing = false);
-
+        this.rightArrow.on("mouseup mouseleave touchend touchcancel", () => (this.pressing = false));
     }
 
-    enableScroll(): void
-    {
+    enableScroll(): void {
         const wContainer = this.container.width();
         const wContent = this.content.width();
 
-        if (wContent < wContainer)
-        {
+        if (wContent < wContainer) {
             this.leftArrow.css("display", "none");
             this.rightArrow.css("display", "none");
             this.position = 0;
-        }
-        else
-        {
+        } else {
             this.leftArrow.css("display", "inline-block");
             this.rightArrow.css("display", "inline-block");
         }
@@ -158,8 +150,7 @@ export class HorizontalScrollerInstance
         this.applyPosition();
     }
 
-    private applyPosition(): void
-    {
+    private applyPosition(): void {
         const translate = `translate(${this.position}px, 0)`;
         const translate3D = `translate3d(${this.position}px, 0, 0)`;
 
@@ -167,38 +158,31 @@ export class HorizontalScrollerInstance
             "-ms-transform": translate,
             "-moz-transform": translate3D,
             "-webkit-transform": translate3D,
-            "transform": translate3D
+            transform: translate3D,
         });
     }
 
-    private checkConstraints(): void
-    {
+    private checkConstraints(): void {
         const wContainer = this.container.width();
         const wContent = this.content.width();
         const minMovement = wContainer - wContent;
 
-        if (wContent <= wContainer || this.position >= 0)
-            this.position = 0;
+        if (wContent <= wContainer || this.position >= 0) this.position = 0;
 
-        if (wContent >= wContainer && this.position <= minMovement)
-            this.position = minMovement;
+        if (wContent >= wContainer && this.position <= minMovement) this.position = minMovement;
     }
 
-    private killInterval(): void
-    {
-        if (ObjectExtensions.isNull(this.intervalId))
-            return;
+    private killInterval(): void {
+        if (ObjectExtensions.isNull(this.intervalId)) return;
 
         window.clearInterval(this.intervalId);
     }
 
-    private getMilliseconds(): number
-    {
-        return (new Date()).getTime();
+    private getMilliseconds(): number {
+        return new Date().getTime();
     }
 
-    private moveLeft(): void
-    {
+    private moveLeft(): void {
         this.pressing = true;
         this.direction = 1;
         this.lastTime = this.getMilliseconds();
@@ -207,8 +191,7 @@ export class HorizontalScrollerInstance
         this.intervalId = window.setInterval(() => this.move(), this.millisecondsPerFrame);
     }
 
-    private moveRight(): void
-    {
+    private moveRight(): void {
         this.pressing = true;
         this.direction = -1;
         this.lastTime = this.getMilliseconds();
@@ -217,31 +200,27 @@ export class HorizontalScrollerInstance
         this.intervalId = window.setInterval(() => this.move(), this.millisecondsPerFrame);
     }
 
-    private move(): void
-    {
+    private move(): void {
         const deltaTime = (this.getMilliseconds() - this.lastTime) / 1000;
 
-        if (this.pressing)
-        {
+        if (this.pressing) {
             this.velocity = this.speed;
         }
 
         this.velocity *= this.friction;
-        this.position = this.position + (this.direction * this.velocity * deltaTime);
+        this.position = this.position + this.direction * this.velocity * deltaTime;
 
         this.checkConstraints();
         this.applyPosition();
 
-        if (this.velocity <= this.minVelocity)
-        {
+        if (this.velocity <= this.minVelocity) {
             this.killInterval();
         }
 
         this.lastTime = this.getMilliseconds();
     }
 
-    dispose(): void
-    {
+    dispose(): void {
         this.container.remove();
         this.content.remove();
         this.leftArrow.remove();

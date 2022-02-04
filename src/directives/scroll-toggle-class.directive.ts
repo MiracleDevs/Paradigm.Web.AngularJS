@@ -7,19 +7,16 @@
 import { Directive } from "../decorators/directive";
 import { DirectiveBase } from "./base.directive";
 import { IScope, IAttributes, ITranscludeFunction, IController } from "angular";
-import  * as $ from "jquery";
+import * as $ from "jquery";
 
 @Directive({
-    name: "scrollToggleClass"
+    name: "scrollToggleClass",
 })
-export class ScrollToggleClassDirective extends DirectiveBase
-{
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+export class ScrollToggleClassDirective extends DirectiveBase {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         var self = this;
 
-        function updateElement(): void
-        {
+        function updateElement(): void {
             self.updateElement(instanceElement, instanceAttributes);
         }
 
@@ -27,8 +24,7 @@ export class ScrollToggleClassDirective extends DirectiveBase
         this.updateElement(instanceElement, instanceAttributes);
     }
 
-    private updateElement(element: JQuery, instanceAttributes: IAttributes): void
-    {
+    private updateElement(element: JQuery, instanceAttributes: IAttributes): void {
         const options = {} as IScrollToggleClassParameters;
 
         this.tryGetNumber(options, instanceAttributes, "minPos");
@@ -40,26 +36,21 @@ export class ScrollToggleClassDirective extends DirectiveBase
 
         const scroll = $(window).scrollTop();
 
-        if (scroll >= options.minPos && scroll <= options.maxPos)
-            element.addClass(options.cssClass);
-        else
-            element.removeClass(options.cssClass);
+        if (scroll >= options.minPos && scroll <= options.maxPos) element.addClass(options.cssClass);
+        else element.removeClass(options.cssClass);
     }
 
-    protected onDestroy(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+    protected onDestroy(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         $(window).unbind("scroll.scrollToggleClass");
         super.onDestroy(scope, instanceElement, instanceAttributes, controller, transclude);
     }
 
-    static factory(): ScrollToggleClassDirective
-    {
+    static factory(): ScrollToggleClassDirective {
         return new ScrollToggleClassDirective();
     }
 }
 
-export interface IScrollToggleClassParameters
-{
+export interface IScrollToggleClassParameters {
     forceAdd: boolean;
 
     forceRemove: boolean;

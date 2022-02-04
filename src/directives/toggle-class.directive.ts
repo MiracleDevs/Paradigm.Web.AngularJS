@@ -7,16 +7,13 @@
 import { Directive } from "../decorators/directive";
 import { DirectiveBase } from "./base.directive";
 import { IScope, IAttributes, ITranscludeFunction, IController } from "angular";
-import { ObjectExtensions } from "@miracledevs/paradigm-ui-web-shared";
 import * as $ from "jquery";
 
 @Directive({
-    name: "toggleClass"
+    name: "toggleClass",
 })
-export class ToggleClassDirective extends DirectiveBase
-{
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+export class ToggleClassDirective extends DirectiveBase {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         const options = <IToggleClassParameters>{};
 
         this.tryGet(options, instanceAttributes, "element");
@@ -24,20 +21,16 @@ export class ToggleClassDirective extends DirectiveBase
 
         const element = $(options.element) || instanceElement;
 
-        if (!element.hasClass(options.toggleClass))
-            element.addClass(options.toggleClass);
-        else
-            element.removeClass(options.toggleClass);
+        if (!element.hasClass(options.toggleClass)) element.addClass(options.toggleClass);
+        else element.removeClass(options.toggleClass);
     }
 
-    static factory(): ToggleClassDirective
-    {
+    static factory(): ToggleClassDirective {
         return new ToggleClassDirective();
     }
 }
 
-export interface IToggleClassParameters
-{
+export interface IToggleClassParameters {
     toggleClass: string;
 
     element: string;

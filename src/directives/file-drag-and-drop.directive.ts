@@ -9,40 +9,41 @@ import { IScope, IAttributes, IController, ITranscludeFunction } from "angular";
 import { Directive } from "../decorators/directive";
 
 @Directive({
-    name: "fileDragAndDrop"
+    name: "fileDragAndDrop",
 })
-export class FileDragAndDropDirective extends DirectiveBase
-{
-    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void
-    {
+export class FileDragAndDropDirective extends DirectiveBase {
+    protected onInit(scope: IScope, instanceElement: JQuery, instanceAttributes: IAttributes, controller: IController, transclude: ITranscludeFunction): void {
         instanceElement[0].addEventListener("dragenter", () => instanceElement.addClass("file-drag-enter"), false);
         instanceElement[0].addEventListener("dragexit", () => instanceElement.removeClass("file-drag-enter"), false);
         instanceElement[0].addEventListener("dragend", () => instanceElement.removeClass("file-drag-enter"), false);
         instanceElement[0].addEventListener("dragleave", () => instanceElement.removeClass("file-drag-enter"), false);
 
-        instanceElement[0].addEventListener("dragover", e =>
-        {
-            instanceElement.addClass("file-drag-enter");
-            e.dataTransfer.dropEffect = "copy";
+        instanceElement[0].addEventListener(
+            "dragover",
+            e => {
+                instanceElement.addClass("file-drag-enter");
+                e.dataTransfer.dropEffect = "copy";
 
-            e.stopPropagation();
-            e.preventDefault();
+                e.stopPropagation();
+                e.preventDefault();
+            },
+            false
+        );
 
-        }, false);
+        instanceElement[0].addEventListener(
+            "drop",
+            e => {
+                scope.$eval(instanceAttributes["fileSelected"], { files: e.dataTransfer.files });
+                instanceElement.removeClass("file-drag-enter");
 
-        instanceElement[0].addEventListener("drop", e =>
-        {
-            scope.$eval(instanceAttributes["fileSelected"], { files: e.dataTransfer.files });
-            instanceElement.removeClass("file-drag-enter");
-
-            e.stopPropagation();
-            e.preventDefault();
-
-        }, false);
+                e.stopPropagation();
+                e.preventDefault();
+            },
+            false
+        );
     }
 
-    static factory(): FileDragAndDropDirective
-    {
+    static factory(): FileDragAndDropDirective {
         return new FileDragAndDropDirective();
     }
 }
