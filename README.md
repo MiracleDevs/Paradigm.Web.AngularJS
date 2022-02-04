@@ -18,6 +18,11 @@ npm install --save @miracledevs/paradigm-ui-web-angularjs
 Change log
 ---
 
+Version `1.4.0`:
+- Upgraded to angular 1.8.4.
+- Upgraded all npm packages when possible.
+- Removed gulp from solution.
+
 Version `1.3.0`
 - Updated dependencies to the latest version.
 - Updated to angular 1.8.2
